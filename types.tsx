@@ -42,5 +42,6 @@ export interface User {
 	username: string;
 	email: string;
 	phone: string;
+	type: "employed_user" | "school_user";
 	id: number;
 }

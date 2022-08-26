@@ -30,3 +30,19 @@ export const registerBase = async (
 	});
 	return data;
 };
+
+export const getUserType = async (token: string) => {
+	const response = await axios.get(
+		"http://213.139.208.189/api/v1/school_user/",
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
+
+	if (response.status === 200) {
+		return "school_user";
+	}
+	return "employed_user";
+};

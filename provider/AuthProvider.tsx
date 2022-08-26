@@ -1,7 +1,7 @@
 import React, { createContext, FC, ReactNode, useState } from "react";
 import { Alert } from "react-native";
 import { User } from "../types";
-import { login } from "./api";
+import { login, getUserType } from "./api";
 
 interface IContext {
 	isLoading: boolean;
@@ -24,11 +24,13 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 		setIsLoading(true);
 		try {
 			const token = await login(username, password);
-			setUser({ ...user, token: token });
+			const type = await getUserType(token);
+			setUser({ ...user, token: token, type: type });
 		} catch (err: any) {
 			console.log(err);
 			Alert.alert("error login");
 		} finally {
+			console.log(user);
 			setIsLoading(false);
 		}
 	};
