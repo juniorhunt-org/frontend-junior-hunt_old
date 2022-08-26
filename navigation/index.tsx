@@ -1,8 +1,3 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -12,20 +7,22 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName } from "react-native";
 
 import Colors from "../constants/Colors";
+import { useAuth } from "../hooks/useAuth";
 import useColorScheme from "../hooks/useColorScheme";
 import Account from "../screens/Account";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
-import TabTwoScreen from "../screens/Search";
 import {
+	AuthTabParamList,
 	RootStackParamList,
 	RootTabParamList,
 	RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import Auth from "../screens/Auth";
 
 export default function Navigation({
 	colorScheme,
@@ -42,28 +39,55 @@ export default function Navigation({
 	);
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+	const { user } = useAuth();
+	console.log(user);
 	return (
 		<Stack.Navigator>
-			<Stack.Screen
-				name="Root"
-				component={BottomTabNavigator}
-				options={{ headerShown: false }}
-			/>
+			{user.token ? (
+				<Stack.Screen
+					name="Root"
+					component={BottomTabNavigator}
+					options={{ headerShown: false }}
+				/>
+			) : (
+				<Stack.Screen
+					name="Auth"
+					component={AuthBottomTabNavigator}
+					options={{ headerShown: false }}
+				/>
+			)}
 		</Stack.Navigator>
 	);
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
+const bottomTabAuth = createBottomTabNavigator<AuthTabParamList>();
+
+function AuthBottomTabNavigator() {
+	const colorScheme = useColorScheme();
+	return (
+		<bottomTabAuth.Navigator
+			initialRouteName="Auth"
+			screenOptions={{
+				tabBarActiveTintColor: Colors[colorScheme].tint,
+			}}
+		>
+			<bottomTabAuth.Screen
+				name="Auth"
+				component={Auth}
+				options={() => ({
+					title: "Auth",
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="user-circle" color={color} />
+					),
+				})}
+			/>
+		</bottomTabAuth.Navigator>
+	);
+}
+
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
@@ -103,7 +127,6 @@ function BottomTabNavigator() {
 		</BottomTab.Navigator>
 	);
 }
-
 
 function TabBarIcon(props: {
 	name: React.ComponentProps<typeof FontAwesome>["name"];

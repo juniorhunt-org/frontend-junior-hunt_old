@@ -27,7 +27,15 @@ const linking: LinkingOptions<RootStackParamList> = {
 				},
 			},
 			Modal: "modal",
-			NotFound: "*",
+			Auth: {
+				screens: {
+					Auth: {
+						screens: {
+							TabOneScreen: "one",
+						},
+					},
+				},
+			},
 		},
 	},
 };
