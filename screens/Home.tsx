@@ -1,22 +1,14 @@
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
-
+import { StyleSheet, TouchableHighlight } from "react-native";
 import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { useAuth } from "../hooks/useAuth";
 
-export default function Home({ navigation }: RootTabScreenProps<"Home">) {
-	useEffect(() => {
-		console.log("start request");
-		fetch("http://localhost/api/ads/ad/?format=json")
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-			});
-	}, []);
+export default function Home() {
+	const { logout } = useAuth();
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Home 2</Text>
+			<Text style={styles.title}>Home</Text>
 			<View
 				style={styles.separator}
 				lightColor="#eee"

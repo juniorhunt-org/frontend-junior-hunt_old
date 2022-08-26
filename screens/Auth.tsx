@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import Layout from "../components/layout/Layout";
 import Loader from "../components/Loader";
@@ -14,7 +15,6 @@ const Auth = () => {
 
 	const SmallTitle = styled.Text`
 		font-size: 14px;
-		width: 100%;
 		margin-top: 10px;
 		margin-right: 20px;
 		color: ${Colors[colorscheme].text};
@@ -28,9 +28,12 @@ const Auth = () => {
 			) : (
 				<>
 					{isLogin ? <Login /> : <SmallTitle>Register</SmallTitle>}
-					<>
+					<TouchableOpacity
+						onPress={() => setIsLogin(!isLogin)}
+						style={{ width: "100%" }}
+					>
 						<SmallTitle>{isLogin ? "Register" : "Login"}</SmallTitle>
-					</>
+					</TouchableOpacity>
 				</>
 			)}
 		</Layout>

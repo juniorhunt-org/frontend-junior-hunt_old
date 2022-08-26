@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useState } from "react";
 import Button from "./Button";
 import { useAuth } from "../../hooks/useAuth";
@@ -12,6 +12,15 @@ interface IData {
 const Login = () => {
 	const [data, setData] = useState<IData>({} as IData);
 	const { login } = useAuth();
+
+	const loginHandler = () => {
+		if (data.username && data.password) {
+			login(data.username, data.password);
+		} else {
+			Alert.alert("Login failed", "All fields are required");
+		}
+	};
+
 	return (
 		<>
 			<Field
@@ -25,10 +34,7 @@ const Login = () => {
 				isSecure={true}
 				placeholder="Enter password"
 			/>
-			<Button
-				title="Login"
-				onPress={() => login(data.username, data.password)}
-			/>
+			<Button title="Login" onPress={loginHandler} />
 		</>
 	);
 };

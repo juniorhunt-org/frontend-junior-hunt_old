@@ -7,6 +7,7 @@ interface IContext {
 	isLoading: boolean;
 	user: User;
 	login: (username: string, password: string) => void;
+	logout: () => void;
 }
 
 interface IProvider {
@@ -25,15 +26,19 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 			const token = await login(username, password);
 			setUser({ ...user, token: token });
 		} catch (err: any) {
-			Alert.alert("error login", err);
+			console.log(err);
+			Alert.alert("error login");
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
+	const logout = () => setUser({} as User);
+
 	const value = {
 		isLoading,
 		user,
+		logout,
 		login: loginHandler,
 	};
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
