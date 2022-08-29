@@ -3,7 +3,8 @@ import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import Layout from "../components/layout/Layout";
 import Loader from "../components/Loader";
-import Login from "../components/ui/Login";
+import Login from "../components/Login";
+import Register from "../components/Register/Register";
 import Colors from "../constants/Colors";
 import { useAuth } from "../hooks/useAuth";
 import useColorScheme from "../hooks/useColorScheme";
@@ -27,7 +28,7 @@ const Auth = () => {
 				<Loader />
 			) : (
 				<>
-					{isLogin ? <Login /> : <SmallTitle>Register</SmallTitle>}
+					{isLogin ? <Login /> : <Register />}
 					<TouchableOpacity
 						onPress={() => setIsLogin(!isLogin)}
 						style={{ width: "100%" }}

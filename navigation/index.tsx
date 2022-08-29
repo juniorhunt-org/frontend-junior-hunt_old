@@ -46,7 +46,7 @@ function RootNavigator() {
 	console.log(user);
 	return (
 		<Stack.Navigator>
-			{user.token ? (
+			{user.detailInfo ? (
 				<Stack.Screen
 					name="Root"
 					component={BottomTabNavigator}

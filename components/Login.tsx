@@ -1,8 +1,8 @@
 import { View, Text, Alert } from "react-native";
 import React, { useState } from "react";
-import Button from "./Button";
-import { useAuth } from "../../hooks/useAuth";
-import Field from "./Field";
+import Button from "./ui/Button";
+import { useAuth } from "../hooks/useAuth";
+import Field from "./ui/Field";
 
 interface IData {
 	username: string;
@@ -26,11 +26,13 @@ const Login = () => {
 			<Field
 				onChange={(val) => setData({ ...data, username: val })}
 				val={data.username}
+				contentType="username"
 				placeholder="Enter username"
 			/>
 			<Field
 				onChange={(val) => setData({ ...data, password: val })}
 				val={data.password}
+				contentType="password"
 				isSecure={true}
 				placeholder="Enter password"
 			/>

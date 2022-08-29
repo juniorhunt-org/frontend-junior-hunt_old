@@ -37,11 +37,21 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 		NativeStackScreenProps<RootStackParamList>
 	>;
 
+export interface ProfileUser {
+	first_name: string;
+	last_name: string;
+	second_name: string | null;
+	address: string | null;
+	gender: number;
+	avatar: string | null;
+	is_company: boolean;
+	company_name: string | null;
+	contacts: string | null;
+	user_id: number;
+	description: string;
+}
+
 export interface User {
 	token: string;
-	username: string;
-	email: string;
-	phone: string;
-	type: "employed_user" | "school_user";
-	id: number;
+	detailInfo: ProfileUser;
 }

@@ -9,7 +9,7 @@ const Layout: FC<ILayout> = ({ children }) => {
 	return (
 		<View
 			style={{
-				paddingHorizontal: 32,
+				paddingHorizontal: 16,
 				height: "100%",
 				marginTop: 64,
 				alignItems: "center",

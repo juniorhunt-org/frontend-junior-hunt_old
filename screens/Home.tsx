@@ -1,19 +1,27 @@
-import { useEffect } from "react";
-import { StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet } from "react-native";
+import Loader from "../components/Loader";
 import { Text, View } from "../components/Themed";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Home() {
-	const { logout } = useAuth();
+	const { user, isLoading } = useAuth();
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Home</Text>
-			<View
-				style={styles.separator}
-				lightColor="#eee"
-				darkColor="rgba(255,255,255,0.1)"
-			/>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<>
+					<Text style={styles.title}>
+						Здравствуйте, {user.detailInfo.first_name}
+					</Text>
+					<View
+						style={styles.separator}
+						lightColor="#eee"
+						darkColor="rgba(255,255,255,0.1)"
+					/>
+				</>
+			)}
 		</View>
 	);
 }
