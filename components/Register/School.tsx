@@ -21,6 +21,7 @@ interface IData {
 
 const School = () => {
 	const [data, setData] = useState<IData>({} as IData);
+	// TODO: add async storage support
 
 	const { register_school } = useAuth();
 
@@ -40,7 +41,7 @@ const School = () => {
 				data.last_name
 			);
 		} else {
-			Alert.alert("Register error", "Все поля обязательные");
+			Alert.alert("Ошибка регистрации", "Все поля обязательные");
 		}
 
 		console.log(data);
@@ -51,7 +52,7 @@ const School = () => {
 			<Field
 				val={data.username}
 				onChange={(value) => setData({ ...data, username: value })}
-				placeholder="Username"
+				placeholder="Введите никнейм"
 				contentType="username"
 			/>
 			<PhoneNumberField
@@ -60,7 +61,7 @@ const School = () => {
 			<Field
 				val={data.email}
 				onChange={(value) => setData({ ...data, email: value })}
-				placeholder="Email"
+				placeholder="Введите email"
 				contentType="emailAddress"
 				keyboardType="email-address"
 			/>
@@ -69,13 +70,13 @@ const School = () => {
 					width={49}
 					val={data.first_name}
 					onChange={(value) => setData({ ...data, first_name: value })}
-					placeholder="First Name"
+					placeholder="Введите имя"
 				/>
 				<Field
 					width={49}
 					val={data.last_name}
 					onChange={(value) => setData({ ...data, last_name: value })}
-					placeholder="Last Name"
+					placeholder="Введите фамилию"
 				/>
 			</Row>
 			<Row>
@@ -85,7 +86,7 @@ const School = () => {
 					isSecure={true}
 					contentType="password"
 					onChange={(value) => setData({ ...data, password: value })}
-					placeholder="Password"
+					placeholder="Введите пароль"
 				/>
 				<Field
 					width={49}
@@ -93,10 +94,10 @@ const School = () => {
 					isSecure={true}
 					val={data.second_password}
 					onChange={(value) => setData({ ...data, second_password: value })}
-					placeholder="Second Password"
+					placeholder="Потвердите ваш пароль"
 				/>
 			</Row>
-			<Button title="Register" onPress={submitHandler} />
+			<Button title="Зарегестрироваться" onPress={submitHandler} />
 		</>
 	);
 };

@@ -33,7 +33,7 @@ const Auth = () => {
 						onPress={() => setIsLogin(!isLogin)}
 						style={{ width: "100%" }}
 					>
-						<SmallTitle>{isLogin ? "Register" : "Login"}</SmallTitle>
+						<SmallTitle>{isLogin ? "Зарегестрироваться" : "Войти"}</SmallTitle>
 					</TouchableOpacity>
 				</>
 			)}

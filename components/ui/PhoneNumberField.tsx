@@ -25,6 +25,7 @@ const PhoneNumberField: FC<IPhoneInput> = ({ onChange }) => {
 				ref={phoneInput}
 				defaultValue={value}
 				defaultCode="RU"
+				placeholder="Введите номер телефона"
 				containerStyle={{
 					borderRadius: 10,
 					borderWidth: 5,

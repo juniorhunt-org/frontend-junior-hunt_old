@@ -78,7 +78,7 @@ function AuthBottomTabNavigator() {
 				name="Auth"
 				component={Auth}
 				options={() => ({
-					title: "Auth",
+					title: "Авторизация",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="user-circle" color={color} />
 					),
@@ -104,7 +104,7 @@ function BottomTabNavigator() {
 				name="Home"
 				component={Home}
 				options={({ navigation }: RootTabScreenProps<"Home">) => ({
-					title: "Home",
+					title: "Главная",
 					tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
 				})}
 			/>
@@ -112,7 +112,7 @@ function BottomTabNavigator() {
 				name="Search"
 				component={Search}
 				options={{
-					title: "Search",
+					title: "Поиск",
 					tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
 				}}
 			/>
@@ -120,7 +120,7 @@ function BottomTabNavigator() {
 				name="Account"
 				component={Account}
 				options={{
-					title: "Account",
+					title: "Профиль",
 					tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
 				}}
 			/>

@@ -28,6 +28,8 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [user, setUser] = useState<User>({} as User);
 
+	// TODO: add asyncstorage support
+
 	const loginHandler = async (username: string, password: string) => {
 		setIsLoading(true);
 		try {

@@ -12,12 +12,12 @@ interface IData {
 const Login = () => {
 	const [data, setData] = useState<IData>({} as IData);
 	const { login } = useAuth();
-
+	// TODO: add async storage support
 	const loginHandler = () => {
 		if (data.username && data.password) {
 			login(data.username, data.password);
 		} else {
-			Alert.alert("Login failed", "All fields are required");
+			Alert.alert("Ошибка входа", "Все поля обязательные");
 		}
 	};
 
@@ -27,16 +27,16 @@ const Login = () => {
 				onChange={(val) => setData({ ...data, username: val })}
 				val={data.username}
 				contentType="username"
-				placeholder="Enter username"
+				placeholder="Введите никнейм"
 			/>
 			<Field
 				onChange={(val) => setData({ ...data, password: val })}
 				val={data.password}
 				contentType="password"
 				isSecure={true}
-				placeholder="Enter password"
+				placeholder="Введите пароль"
 			/>
-			<Button title="Login" onPress={loginHandler} />
+			<Button title="Войти" onPress={loginHandler} />
 		</>
 	);
 };

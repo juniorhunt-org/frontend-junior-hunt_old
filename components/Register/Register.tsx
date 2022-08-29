@@ -12,13 +12,13 @@ const Register = () => {
 		<>
 			<Row>
 				<Button
-					title="I school"
+					title="Я школьник"
 					active={!isCompany}
 					width={48}
 					onPress={() => setIsCompany(false)}
 				/>
 				<Button
-					title="I employer"
+					title="Я бизнес"
 					width={48}
 					active={isCompany}
 					onPress={() => setIsCompany(true)}

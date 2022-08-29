@@ -23,7 +23,7 @@ const Loader = () => {
 
 	return (
 		<Wrapper>
-			<Title>Loading</Title>
+			<Title>Загрузка ...</Title>
 			<ActivityIndicator size="large" />
 		</Wrapper>
 	);
