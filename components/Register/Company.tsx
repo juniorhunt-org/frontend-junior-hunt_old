@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Alert } from "react-native";
-import Button from "../ui/Button";
+import React, { FC, useState } from "react";
+import { useAsyncStorage } from "../../hooks/useAsyncStorage";
 import Field from "../ui/Field";
 import Row from "../ui/Row";
+import Button from "../ui/Button";
+import { Alert } from "react-native";
 import { useAuth } from "../../hooks/useAuth";
-import { useAsyncStorage } from "../../hooks/useAsyncStorage";
 
-interface IData {
+interface ICompany {
 	first_name: string;
 	last_name: string;
 	password: string;
@@ -14,15 +14,15 @@ interface IData {
 	username: string;
 	email: string;
 	phone: string;
-	description: string;
-	address: string;
+	company_name: string;
 }
 
-const School = () => {
-	const [data, setData] = useState<IData>({} as IData);
-	useAsyncStorage("register_form_school", setData, data);
+const Company: FC = () => {
+	const [data, setData] = useState<ICompany>({} as ICompany);
 
-	const { register: register_school } = useAuth();
+	const { register } = useAuth();
+
+	useAsyncStorage("company_registration_form", setData, data);
 
 	const submitHandler = async () => {
 		if (
@@ -31,21 +31,19 @@ const School = () => {
 			data.first_name &&
 			data.last_name
 		) {
-			register_school(
+			register(
 				data.email,
 				data.username,
 				data.password,
 				data.phone,
 				data.first_name,
-				data.last_name
+				data.last_name,
+				data.company_name
 			);
 		} else {
 			Alert.alert("Ошибка регистрации", "Все поля обязательные");
 		}
-
-		console.log(data);
 	};
-
 	return (
 		<>
 			<Field
@@ -53,6 +51,12 @@ const School = () => {
 				onChange={(value) => setData({ ...data, username: value })}
 				placeholder="Введите никнейм"
 				contentType="username"
+			/>
+			<Field
+				val={data.company_name}
+				onChange={(value) => setData({ ...data, company_name: value })}
+				placeholder="Введите название компании"
+				contentType="givenName"
 			/>
 			<Field
 				val={data.phone}
@@ -105,4 +109,4 @@ const School = () => {
 	);
 };
 
-export default School;
+export default Company;

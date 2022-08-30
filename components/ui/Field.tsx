@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { KeyboardTypeOptions, TextInput } from "react-native";
 import styled from "styled-components/native";
 import Colors from "../../constants/Colors";
+import Layout from "../../constants/Layout";
 import useColorScheme from "../../hooks/useColorScheme";
 
 interface IField {
@@ -55,6 +56,8 @@ const Field: FC<IField> = ({
 }) => {
 	const colorscheme = useColorScheme();
 
+	const { isSmallDevice } = Layout;
+
 	return (
 		<TextInput
 			style={{
@@ -66,6 +69,7 @@ const Field: FC<IField> = ({
 				color: Colors[colorscheme].text,
 				borderRadius: 10,
 				borderWidth: 2,
+				fontSize: isSmallDevice ? 11 : 13,
 			}}
 			placeholder={placeholder}
 			onChangeText={onChange}

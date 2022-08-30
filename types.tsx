@@ -55,3 +55,15 @@ export interface User {
 	token: string;
 	detailInfo: ProfileUser;
 }
+
+export interface IAd {
+	id: number;
+	title: string;
+	description: string;
+	owner: number;
+	payment: number;
+	limit: number;
+	category: number;
+	address: string;
+	users: number[];
+}

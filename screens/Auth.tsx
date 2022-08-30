@@ -29,11 +29,8 @@ const Auth = () => {
 			) : (
 				<>
 					{isLogin ? <Login /> : <Register />}
-					<TouchableOpacity
-						onPress={() => setIsLogin(!isLogin)}
-						style={{ width: "100%" }}
-					>
-						<SmallTitle>{isLogin ? "Зарегестрироваться" : "Войти"}</SmallTitle>
+					<TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
+						<SmallTitle>{isLogin ? "Зарегистрироваться" : "Войти"}</SmallTitle>
 					</TouchableOpacity>
 				</>
 			)}

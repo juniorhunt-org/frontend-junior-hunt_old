@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "./ui/Button";
 import { useAuth } from "../hooks/useAuth";
 import Field from "./ui/Field";
+import { useAsyncStorage } from "../hooks/useAsyncStorage";
 
 interface IData {
 	username: string;
@@ -12,7 +13,8 @@ interface IData {
 const Login = () => {
 	const [data, setData] = useState<IData>({} as IData);
 	const { login } = useAuth();
-	// TODO: add async storage support
+	useAsyncStorage("login_form", setData, data);
+
 	const loginHandler = () => {
 		if (data.username && data.password) {
 			login(data.username, data.password);

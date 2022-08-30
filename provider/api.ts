@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Alert } from "react-native";
-import { ProfileUser } from "../types";
+import { IAd, ProfileUser } from "../types";
 
 interface ILogin {
 	auth_token: string;
@@ -66,4 +66,13 @@ export const detailInfo = async (token: string): Promise<ProfileUser> => {
 		}
 	);
 	return data[0];
+};
+
+export const getAdds = async (token: string): Promise<IAd[]> => {
+	const { data } = await axios.get("http://213.139.208.189/api/ads/ad/", {
+		headers: {
+			Authorization: `Token ${token}`,
+		},
+	});
+	return data;
 };

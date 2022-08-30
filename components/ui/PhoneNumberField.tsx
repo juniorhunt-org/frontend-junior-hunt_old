@@ -6,12 +6,10 @@ import Colors from "../../constants/Colors";
 
 interface IPhoneInput {
 	onChange: (value: string) => void;
+	valueDefault: string;
 }
 
-const PhoneNumberField: FC<IPhoneInput> = ({ onChange }) => {
-	const [value, setValue] = useState("");
-	const phoneInput = useRef<PhoneInput>(null);
-
+const PhoneNumberField: FC<IPhoneInput> = ({ onChange, valueDefault }) => {
 	const colorscheme = useColorScheme();
 
 	return (
@@ -22,8 +20,7 @@ const PhoneNumberField: FC<IPhoneInput> = ({ onChange }) => {
 			}}
 		>
 			<PhoneInput
-				ref={phoneInput}
-				defaultValue={value}
+				defaultValue={valueDefault}
 				defaultCode="RU"
 				placeholder="Введите номер телефона"
 				containerStyle={{
@@ -45,9 +42,7 @@ const PhoneNumberField: FC<IPhoneInput> = ({ onChange }) => {
 					backgroundColor: Colors[colorscheme].tint,
 				}}
 				layout="second"
-				onChangeText={(text) => {
-					setValue(text);
-				}}
+				onChangeText={onChange}
 				onChangeFormattedText={onChange}
 				withDarkTheme={colorscheme === "dark"}
 			/>

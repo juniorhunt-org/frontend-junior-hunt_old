@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import Button from "../ui/Button";
 import School from "./School";
 import Row from "../ui/Row";
-import Layout from "../layout/Layout";
+import Company from "./Company";
+import { useAsyncStorage } from "../../hooks/useAsyncStorage";
 
 const Register = () => {
 	const [isCompany, setIsCompany] = useState(false);
-
+	useAsyncStorage("is_company_form", setIsCompany, isCompany);
 	return (
 		<>
 			<Row>
@@ -24,13 +25,7 @@ const Register = () => {
 					onPress={() => setIsCompany(true)}
 				/>
 			</Row>
-			{isCompany ? (
-				<Layout>
-					<Text>Company</Text>
-				</Layout>
-			) : (
-				<School />
-			)}
+			<>{isCompany ? <Company /> : <School />}</>
 		</>
 	);
 };

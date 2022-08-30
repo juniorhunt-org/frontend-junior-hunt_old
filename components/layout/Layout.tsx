@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { FC } from "react";
 
 interface ILayout {
@@ -11,8 +11,6 @@ const Layout: FC<ILayout> = ({ children }) => {
 			style={{
 				paddingHorizontal: 16,
 				height: "100%",
-				marginTop: 64,
-				alignItems: "center",
 			}}
 		>
 			{children}

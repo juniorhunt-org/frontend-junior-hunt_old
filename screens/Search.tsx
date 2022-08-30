@@ -1,33 +1,33 @@
-import { StyleSheet } from "react-native";
-
-import { Text, View } from "../components/Themed";
+import React, { useEffect, useState } from "react";
+import { FlatList, RefreshControl } from "react-native";
+import Layout from "../components/layout/Layout";
+import Ad from "../components/ui/Ad";
+import { useAuth } from "../hooks/useAuth";
+import { IAd } from "../types";
 
 export default function Search() {
+	const [data, setData] = useState<IAd[]>([]);
+	const { fetchAds, isLoading } = useAuth();
+
+	const update = () => {
+		fetchAds().then((data) => {
+			console.log(data);
+			setData(data);
+		});
+	};
+
+	useEffect(update, []);
+
 	return (
-		<View style={styles.container}>
-			<Text style={styles.title}>Search tab</Text>
-			<View
-				style={styles.separator}
-				lightColor="#eee"
-				darkColor="rgba(255,255,255,0.1)"
+		<Layout>
+			<FlatList
+				data={data}
+				refreshControl={
+					<RefreshControl refreshing={isLoading} onRefresh={update} />
+				}
+				renderItem={({ item }) => <Ad {...item} />}
+				keyExtractor={(item) => `ad ${item.id}`}
 			/>
-		</View>
+		</Layout>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: "80%",
-	},
-});
