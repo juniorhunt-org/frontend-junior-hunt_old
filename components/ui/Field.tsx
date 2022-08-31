@@ -72,6 +72,7 @@ const Field: FC<IField> = ({
 				fontSize: isSmallDevice ? 11 : 13,
 			}}
 			placeholder={placeholder}
+			placeholderTextColor={Colors[colorscheme].text}
 			onChangeText={onChange}
 			value={val}
 			secureTextEntry={isSecure}

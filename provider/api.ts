@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Alert } from "react-native";
 import { IAd, ProfileUser } from "../types";
 
 interface ILogin {
@@ -74,5 +73,29 @@ export const getAdds = async (token: string): Promise<IAd[]> => {
 			Authorization: `Token ${token}`,
 		},
 	});
+	return data;
+};
+
+export const requestAd = async (token: string, ad: IAd) => {
+	await axios.post(
+		`http://213.139.208.189/api/ads/add_user/`,
+		{ ad_id: ad.id },
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
+};
+
+export const getReplyAds = async (token: string): Promise<IAd[]> => {
+	const { data } = await axios.get(
+		"http://213.139.208.189/api/ads/reply_ads/",
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
 	return data;
 };

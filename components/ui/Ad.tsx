@@ -6,10 +6,21 @@ import styled from "styled-components/native";
 import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
 import Button from "./Button";
-import Row from "./Row";
+import { useAd } from "../../hooks/useAd";
 
-const Ad: FC<IAd> = ({ title, description, limit, payment }) => {
+interface IAdProps {
+	ad: IAd;
+	navigator: any;
+}
+
+const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 	const colorscheme = useColorScheme();
+	const { setAd } = useAd();
+
+	const detailAd = () => {
+		setAd(ad);
+		navigator.navigate("Modal");
+	};
 
 	const Wrapper = styled.View`
 		margin-top: 10px;
@@ -39,18 +50,18 @@ const Ad: FC<IAd> = ({ title, description, limit, payment }) => {
 
 	return (
 		<Wrapper>
-			<Title>{title}</Title>
+			<Title>{ad.title}</Title>
 			<Intro>
-				{description.length > 47
-					? description.substring(0, 47) + "..."
-					: description}
+				{ad.description.length > 47
+					? ad.description.substring(0, 47) + "..."
+					: ad.description}
 			</Intro>
 			<Intro>
 				<FontAwesome name="user" size={14} /> Количество свободных вакансий:{" "}
-				{limit}
+				{ad.limit}
 			</Intro>
-			<Price>{payment} ₽ за час</Price>
-			<Button title="Подробнее" onPress={() => {}} />
+			<Price>{ad.payment} ₽ за час</Price>
+			<Button title="Подробнее" onPress={detailAd} />
 		</Wrapper>
 	);
 };

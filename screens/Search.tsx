@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { FlatList, RefreshControl } from "react-native";
+import AdList from "../components/AdList";
 import Layout from "../components/layout/Layout";
 import Ad from "../components/ui/Ad";
+import Button from "../components/ui/Button";
 import { useAuth } from "../hooks/useAuth";
-import { IAd } from "../types";
+import { IAd, RootTabScreenProps } from "../types";
 
-export default function Search() {
-	const [data, setData] = useState<IAd[]>([]);
-	const { fetchAds, isLoading } = useAuth();
-
-	const update = () => {
-		fetchAds().then((data) => {
-			console.log(data);
-			setData(data);
-		});
-	};
-
-	useEffect(update, []);
+export const Search: FC<RootTabScreenProps<"Search">> = ({ navigation }) => {
+	const { fetchAds } = useAuth();
 
 	return (
 		<Layout>
-			<FlatList
-				data={data}
-				refreshControl={
-					<RefreshControl refreshing={isLoading} onRefresh={update} />
-				}
-				renderItem={({ item }) => <Ad {...item} />}
-				keyExtractor={(item) => `ad ${item.id}`}
-			/>
+			<AdList getData={fetchAds} navigation={navigation} />
 		</Layout>
 	);
-}
+};

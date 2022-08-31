@@ -13,8 +13,8 @@ import Colors from "../constants/Colors";
 import { useAuth } from "../hooks/useAuth";
 import useColorScheme from "../hooks/useColorScheme";
 import Account from "../screens/Account";
-import Home from "../screens/Home";
-import Search from "../screens/Search";
+import { Home } from "../screens/Home";
+import { Search } from "../screens/Search";
 import {
 	AuthTabParamList,
 	RootStackParamList,
@@ -23,6 +23,7 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import Auth from "../screens/Auth";
+import { ModalScreen } from "../screens/ModalScreen";
 
 export default function Navigation({
 	colorScheme,
@@ -59,6 +60,13 @@ function RootNavigator() {
 					options={{ headerShown: false }}
 				/>
 			)}
+			<Stack.Group screenOptions={{ presentation: "modal" }}>
+				<Stack.Screen
+					options={{ title: "Объявление" }}
+					name="Modal"
+					component={ModalScreen}
+				/>
+			</Stack.Group>
 		</Stack.Navigator>
 	);
 }

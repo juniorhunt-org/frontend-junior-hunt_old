@@ -4,6 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
+import { AdProvider } from "./provider/AdProvider";
 import { AuthProvider } from "./provider/AuthProvider";
 
 export default function App() {
@@ -15,10 +16,12 @@ export default function App() {
 	} else {
 		return (
 			<AuthProvider>
-				<SafeAreaProvider>
-					<Navigation colorScheme={colorScheme} />
-					<StatusBar />
-				</SafeAreaProvider>
+				<AdProvider>
+					<SafeAreaProvider>
+						<Navigation colorScheme={colorScheme} />
+						<StatusBar />
+					</SafeAreaProvider>
+				</AdProvider>
 			</AuthProvider>
 		);
 	}

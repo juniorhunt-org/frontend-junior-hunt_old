@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { Modal } from "react-native";
 import React, { useState } from "react";
 import Button from "../ui/Button";
 import School from "./School";
@@ -25,7 +25,7 @@ const Register = () => {
 					onPress={() => setIsCompany(true)}
 				/>
 			</Row>
-			<>{isCompany ? <Company /> : <School />}</>
+			<>{isCompany ? <Company />  : <School />}</>
 		</>
 	);
 };

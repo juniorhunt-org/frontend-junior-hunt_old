@@ -25,6 +25,7 @@ export type RootTabParamList = {
 	Search: undefined;
 	Account: undefined;
 	Login: undefined;
+	Modal: undefined;
 };
 
 export type AuthTabParamList = {
@@ -38,6 +39,7 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 	>;
 
 export interface ProfileUser {
+	id?: number;
 	first_name: string;
 	last_name: string;
 	second_name: string | null;

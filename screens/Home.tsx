@@ -1,44 +1,29 @@
-import { StyleSheet } from "react-native";
-import Loader from "../components/Loader";
-import { Text, View } from "../components/Themed";
-import { useAuth } from "../hooks/useAuth";
+import { FC } from "react";
+import styled from "styled-components/native";
+import AdList from "../components/AdList";
+import Layout from "../components/layout/Layout";
+import Colors from "../constants/Colors";
+import { useAd } from "../hooks/useAd";
+import useColorScheme from "../hooks/useColorScheme";
+import { RootTabScreenProps } from "../types";
 
-export default function Home() {
-	const { user, isLoading } = useAuth();
+export const Home: FC<RootTabScreenProps<"Home">> = ({ navigation }) => {
+	const { getReplyAds } = useAd();
+
+	const colorscheme = useColorScheme();
+
+	const Title = styled.Text`
+		text-align: center;
+		color: ${Colors[colorscheme].text};
+		font-size: 19px;
+		font-weight: 500;
+		margin: 20px 0;
+	`;
 
 	return (
-		<View style={styles.container}>
-			{isLoading ? (
-				<Loader />
-			) : (
-				<>
-					<Text style={styles.title}>
-						Здравствуйте, {user.detailInfo.first_name}
-					</Text>
-					<View
-						style={styles.separator}
-						lightColor="#eee"
-						darkColor="rgba(255,255,255,0.1)"
-					/>
-				</>
-			)}
-		</View>
+		<Layout>
+			<Title>Объявления на которые вы откликнулись</Title>
+			<AdList getData={getReplyAds} navigation={navigation} />
+		</Layout>
 	);
-}
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: "80%",
-	},
-});
+};
