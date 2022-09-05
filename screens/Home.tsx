@@ -1,29 +1,37 @@
-import { FC } from "react";
-import styled from "styled-components/native";
+import React, { FC } from "react";
 import AdList from "../components/AdList";
+import { FadeInView } from "../components/FadeInView";
 import Layout from "../components/layout/Layout";
-import Colors from "../constants/Colors";
+import Label from "../components/ui/Label";
+import UsersList from "../components/UsersList";
 import { useAd } from "../hooks/useAd";
+import { useAuth } from "../hooks/useAuth";
 import useColorScheme from "../hooks/useColorScheme";
 import { RootTabScreenProps } from "../types";
 
 export const Home: FC<RootTabScreenProps<"Home">> = ({ navigation }) => {
 	const { getReplyAds } = useAd();
-
-	const colorscheme = useColorScheme();
-
-	const Title = styled.Text`
-		text-align: center;
-		color: ${Colors[colorscheme].text};
-		font-size: 19px;
-		font-weight: 500;
-		margin: 20px 0;
-	`;
+	const { user } = useAuth();
 
 	return (
-		<Layout>
-			<Title>Объявления на которые вы откликнулись</Title>
-			<AdList getData={getReplyAds} navigation={navigation} />
-		</Layout>
+		<FadeInView>
+			<Layout>
+				{user.detailInfo.is_company ? (
+					<>
+						<Label>Пользователя откликнувшиеся на ваши объявления</Label>
+						<UsersList navigation={navigation} />
+					</>
+				) : (
+					<>
+						<Label>Объявления на которые вы откликнулись</Label>
+						<AdList
+							getData={getReplyAds}
+							navigation={navigation}
+							filtering={false}
+						/>
+					</>
+				)}
+			</Layout>
+		</FadeInView>
 	);
 };

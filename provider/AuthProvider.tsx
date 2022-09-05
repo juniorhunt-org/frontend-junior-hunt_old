@@ -1,11 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext, FC, ReactNode, useState } from "react";
+import React, {
+	createContext,
+	FC,
+	ReactNode,
+	SetStateAction,
+	useState,
+} from "react";
 import { Alert } from "react-native";
+import { ApiErrorAlert } from "../decorators";
 import { useAsyncStorage } from "../hooks/useAsyncStorage";
-import { IAd, User } from "../types";
+import { IAd, ProfileUser, User } from "../types";
 import {
 	detailInfo,
 	getAdds,
+	getUserInfo,
 	login,
 	registerBase,
 	registerProfile,
@@ -26,6 +34,8 @@ interface IContext {
 	) => void;
 	logout: () => void;
 	fetchAds: () => Promise<IAd[]>;
+	setIsLoading: (val: SetStateAction<boolean>) => void;
+	getUserInfo: (user_id: number) => Promise<ProfileUser>;
 }
 
 interface IProvider {
@@ -41,28 +51,17 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 
 	const loginHandler = async (username: string, password: string) => {
 		setIsLoading(true);
-		try {
+		const targer = async () => {
+			console.log("login");
 			const token = await login(username, password);
+			console.log("token", token);
 			const detail = await detailInfo(token);
+			console.log("token", detail);
 			setUser({ ...user, token: token, detailInfo: detail });
-			AsyncStorage.removeItem("login_form");
-		} catch (error: any) {
-			const errorData = error.response.data;
-			Object.keys(errorData).forEach((key: any) => {
-				let fieldsKey = key;
-				switch (key) {
-					case "non_field_errors":
-						fieldsKey = "";
-					case "username":
-						fieldsKey = "Никнейм: ";
-					case "password":
-						fieldsKey = "Пароль: ";
-				}
-				Alert.alert("Ошибка регистрации", fieldsKey + errorData[key][0]);
-			});
-		} finally {
-			setIsLoading(false);
-		}
+		};
+		await ApiErrorAlert(targer);
+		AsyncStorage.removeItem("login_form");
+		setIsLoading(false);
 	};
 
 	const registerHandler = async (
@@ -75,7 +74,7 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 		company_name?: string
 	) => {
 		setIsLoading(true);
-		try {
+		const targer = async () => {
 			const base_user = await registerBase(username, password, email, phone);
 			const token = await login(username, password);
 			if (company_name === undefined)
@@ -117,30 +116,15 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 			AsyncStorage.removeItem("register_form_school");
 			AsyncStorage.removeItem("company_registration_form");
 			AsyncStorage.removeItem("is_company_form");
-		} catch (error: any) {
-			const errorData = error.response.data;
-			Object.keys(errorData).forEach((key: any) => {
-				let fieldsKey = key;
-				switch (key) {
-					case "phone":
-						fieldsKey = "Номер телефона: ";
-						break;
-					case "email":
-						fieldsKey = "Email: ";
-						break;
-					case "username":
-						fieldsKey = "Никнейм: ";
-					case "password":
-						fieldsKey = "Пароль: ";
-				}
-				Alert.alert("Ошибка регистрации", fieldsKey + errorData[key][0]);
-			});
-		} finally {
-			setIsLoading(false);
-		}
+		};
+		await ApiErrorAlert(targer);
+		setIsLoading(false);
 	};
 
-	const logout = () => setUser({} as User);
+	const logout = () => {
+		setUser({} as User);
+		AsyncStorage.clear();
+	};
 
 	const fetchAds = async () => {
 		setIsLoading(true);
@@ -156,6 +140,8 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 		login: loginHandler,
 		register: registerHandler,
 		fetchAds,
+		setIsLoading,
+		getUserInfo,
 	};
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

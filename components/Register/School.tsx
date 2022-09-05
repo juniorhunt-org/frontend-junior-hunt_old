@@ -5,6 +5,8 @@ import Field from "../ui/Field";
 import Row from "../ui/Row";
 import { useAuth } from "../../hooks/useAuth";
 import { useAsyncStorage } from "../../hooks/useAsyncStorage";
+import PhoneNumberField from "../ui/PhoneNumberField";
+import { isValidNumber } from "react-native-phone-number-input";
 
 interface IData {
 	first_name: string;
@@ -20,30 +22,35 @@ interface IData {
 
 const School = () => {
 	const [data, setData] = useState<IData>({} as IData);
+	const [value, setValue] = useState("");
+	const [formattedValue, setFormattedValue] = useState("");
 	useAsyncStorage("register_form_school", setData, data);
 
 	const { register: register_school } = useAuth();
 
 	const submitHandler = async () => {
-		if (
-			data.password &&
-			data.second_password &&
-			data.first_name &&
-			data.last_name
-		) {
-			register_school(
-				data.email,
-				data.username,
-				data.password,
-				data.phone,
-				data.first_name,
+		if (isValidNumber(formattedValue, "RU")) {
+			data.phone = formattedValue;
+			if (
+				data.password &&
+				data.second_password &&
+				data.first_name &&
 				data.last_name
-			);
+			) {
+				register_school(
+					data.email,
+					data.username,
+					data.password,
+					data.phone,
+					data.first_name,
+					data.last_name
+				);
+			} else {
+				Alert.alert("Ошибка регистрации", "Все поля обязательные");
+			}
 		} else {
-			Alert.alert("Ошибка регистрации", "Все поля обязательные");
+			Alert.alert("Ошибка регистрации", "Введен некорректный номер телефона");
 		}
-
-		console.log(data);
 	};
 
 	return (
@@ -54,12 +61,10 @@ const School = () => {
 				placeholder="Введите никнейм"
 				contentType="username"
 			/>
-			<Field
-				val={data.phone}
-				onChange={(value) => setData({ ...data, phone: value })}
-				placeholder="Введите ваш номер телефона"
-				contentType="telephoneNumber"
-				keyboardType="number-pad"
+			<PhoneNumberField
+				value={value}
+				setFormatted={setFormattedValue}
+				setValue={setValue}
 			/>
 			<Field
 				val={data.email}

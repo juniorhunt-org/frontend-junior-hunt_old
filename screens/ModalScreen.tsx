@@ -1,21 +1,33 @@
 import { StatusBar } from "expo-status-bar";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Alert, Platform } from "react-native";
 import styled from "styled-components/native";
 import useColorScheme from "../hooks/useColorScheme";
 
 import { useAd } from "../hooks/useAd";
-import { RootTabScreenProps } from "../types";
+import { NumberToWeekDay, RootTabScreenProps, Schedule } from "../types";
 import Colors from "../constants/Colors";
 import Layout from "../components/layout/Layout";
 import { FontAwesome } from "@expo/vector-icons";
 import Button from "../components/ui/Button";
+import { useAuth } from "../hooks/useAuth";
+import UserCard from "../components/ui/UserCard";
 
 export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 	navigation,
 }) => {
-	const { ad, requestAd } = useAd();
+	const { ad, requestAd, getSchedule } = useAd();
 	const colorscheme = useColorScheme();
+	const { user } = useAuth();
+	const [schedule, setSchedule] = useState<Schedule>({} as Schedule);
+
+	const getScheduleHandler = async () => {
+		setSchedule(await getSchedule(ad));
+	};
+
+	useEffect(() => {
+		getScheduleHandler();
+	}, []);
 
 	const Title = styled.Text`
 		font-weight: 500;
@@ -72,8 +84,32 @@ export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 					Адрес: <Address>{ad.address}</Address>
 				</Description>
 				<Price>{ad.payment} ₽ за час</Price>
-				{/* TODO: create users add to ad  */}
-				<Button title="Откликнуться" onPress={submitHandler} />
+				{schedule && (
+					<Price>
+						Время работы с {schedule.start} - {schedule.stop} в{" "}
+						{NumberToWeekDay[schedule.week_day]}
+					</Price>
+				)}
+				<UserCard
+					ad={ad}
+					navigation={navigation}
+					user_id={ad.owner}
+					showAd={false}
+				/>
+				{user.detailInfo.is_company ? (
+					ad.owner == user.detailInfo.id ? (
+						<Button title="Удалить" danger={true} onPress={() => {}} />
+					) : (
+						<Button
+							title="Вы не можете откликаться на вакансии"
+							onPress={() => {}}
+							active={false}
+						/>
+					)
+				) : (
+					<Button title="Откликнуться" onPress={submitHandler} />
+				)}
+
 				<StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
 			</Wrapper>
 		</Layout>

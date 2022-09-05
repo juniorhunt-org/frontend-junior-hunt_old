@@ -1,18 +1,27 @@
-import React, { FC, useEffect, useState } from "react";
-import { FlatList, RefreshControl } from "react-native";
+import React, { FC } from "react";
 import AdList from "../components/AdList";
+import { FadeInView } from "../components/FadeInView";
 import Layout from "../components/layout/Layout";
-import Ad from "../components/ui/Ad";
 import Button from "../components/ui/Button";
 import { useAuth } from "../hooks/useAuth";
-import { IAd, RootTabScreenProps } from "../types";
+import { RootTabScreenProps } from "../types";
 
 export const Search: FC<RootTabScreenProps<"Search">> = ({ navigation }) => {
-	const { fetchAds } = useAuth();
+	const { fetchAds, user } = useAuth();
 
 	return (
-		<Layout>
-			<AdList getData={fetchAds} navigation={navigation} />
-		</Layout>
+		<FadeInView>
+			<Layout>
+				{user.detailInfo.is_company && (
+					<Button
+						title="Создать объявления"
+						onPress={() => {
+							navigation.navigate("addForm");
+						}}
+					/>
+				)}
+				<AdList getData={fetchAds} navigation={navigation} />
+			</Layout>
+		</FadeInView>
 	);
 };

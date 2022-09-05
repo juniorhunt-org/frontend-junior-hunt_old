@@ -15,6 +15,7 @@ export type RootStackParamList = {
 	Root: NavigatorScreenParams<RootTabParamList> | undefined;
 	Modal: undefined;
 	Auth: undefined;
+	addForm: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -69,3 +70,21 @@ export interface IAd {
 	address: string;
 	users: number[];
 }
+
+export interface Schedule {
+	id: number;
+	start: string;
+	stop: string;
+	week_day: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+	ad: number;
+}
+
+export const NumberToWeekDay = {
+	0: "понедельник",
+	1: "вторник",
+	2: "среду",
+	3: "четверг",
+	4: "пятницу",
+	5: "субботу",
+	6: "воскресенье",
+};

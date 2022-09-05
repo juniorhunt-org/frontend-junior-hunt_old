@@ -16,7 +16,6 @@ export const useAsyncStorage = (
 
 	const loadStorage = async () => {
 		const storage_data = await AsyncStorage.getItem(key);
-		console.log(key, storage_data);
 		if (storage_data) {
 			setter(JSON.parse(storage_data));
 		}

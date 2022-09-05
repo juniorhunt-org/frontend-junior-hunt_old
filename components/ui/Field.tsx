@@ -42,6 +42,7 @@ interface IField {
 		| "password"
 		| "newPassword"
 		| "oneTimeCode";
+	multiline?: boolean;
 }
 
 const Field: FC<IField> = ({
@@ -52,19 +53,25 @@ const Field: FC<IField> = ({
 	keyboardType,
 	width = 100,
 	contentType,
-	required = false,
+	multiline = false,
 }) => {
 	const colorscheme = useColorScheme();
-
 	const { isSmallDevice } = Layout;
 
 	return (
 		<TextInput
+			blurOnSubmit={true}
 			style={{
 				marginTop: 10,
-				padding: 12,
+				padding: isSmallDevice ? 5 : 10,
 				borderColor: Colors[colorscheme].tint,
 				width: `${width}%`,
+				shadowColor: "#000",
+				shadowOffset: { width: 0, height: 2 },
+				shadowOpacity: 0.25,
+				shadowRadius: 3.84,
+				elevation: 5,
+				height: multiline ? 100 : "auto",
 				backgroundColor: Colors[colorscheme].background,
 				color: Colors[colorscheme].text,
 				borderRadius: 10,
@@ -72,9 +79,10 @@ const Field: FC<IField> = ({
 				fontSize: isSmallDevice ? 11 : 13,
 			}}
 			placeholder={placeholder}
-			placeholderTextColor={Colors[colorscheme].text}
+			placeholderTextColor={Colors[colorscheme].placeholderColor}
 			onChangeText={onChange}
 			value={val}
+			multiline={multiline}
 			secureTextEntry={isSecure}
 			autoCapitalize="none"
 			keyboardType={keyboardType}

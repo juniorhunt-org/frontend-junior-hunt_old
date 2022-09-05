@@ -7,6 +7,7 @@ interface IButton {
 	title: string;
 	onPress: () => void;
 	style?: any;
+	danger?: boolean;
 	active?: boolean;
 	width?: number;
 }
@@ -16,17 +17,21 @@ const Button: FC<IButton> = ({
 	onPress,
 	style,
 	active = true,
+	danger = false,
 	width = 100,
 }) => {
 	const colorscheme = useColorScheme();
-	const Wrapper = styled.TouchableHighlight`
+	const Wrapper = styled.TouchableOpacity`
 		width: ${width}%;
-		padding: 20px;
-		border-radius: 16px;
-		background-color: ${!active
+		padding: 15px;
+		border-radius: 10px;
+		background-color: ${danger
+			? Colors[colorscheme].dangerColor
+			: !active
 			? Colors[colorscheme].background
 			: Colors[colorscheme].tint};
 		margin-top: 10px;
+		margin-bottom: 10px;
 		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 		${!active ? `border: 2px solid ` + Colors[colorscheme].tint : ""}
 	`;

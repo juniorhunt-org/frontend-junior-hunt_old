@@ -1,5 +1,6 @@
 const tintColorLight = "#51ad72";
 const tintColorDark = "#4E9F3D";
+const placeholderColor = "#cacccb";
 
 export default {
 	light: {
@@ -7,13 +8,17 @@ export default {
 		background: "#fff",
 		tint: tintColorLight,
 		tabIconDefault: "#ccc",
+		placeholderColor: placeholderColor,
 		tabIconSelected: tintColorLight,
+		dangerColor: "#ED2939",
 	},
 	dark: {
 		text: "#fff",
-		background: "#000",
+		background: "#181818",
 		tint: tintColorDark,
 		tabIconDefault: "#ccc",
+		placeholderColor: placeholderColor,
 		tabIconSelected: tintColorDark,
+		dangerColor: "#A7171A",
 	},
 };

@@ -24,6 +24,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import Auth from "../screens/Auth";
 import { ModalScreen } from "../screens/ModalScreen";
+import AddFormAd from "../screens/AddFormAd";
 
 export default function Navigation({
 	colorScheme,
@@ -44,14 +45,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
 	const { user } = useAuth();
-	console.log(user);
 	return (
 		<Stack.Navigator>
 			{user.detailInfo ? (
 				<Stack.Screen
 					name="Root"
 					component={BottomTabNavigator}
-					options={{ headerShown: false }}
+					options={{
+						headerShown: false,
+					}}
 				/>
 			) : (
 				<Stack.Screen
@@ -65,6 +67,11 @@ function RootNavigator() {
 					options={{ title: "Объявление" }}
 					name="Modal"
 					component={ModalScreen}
+				/>
+				<Stack.Screen
+					options={{ title: "Создания объявления" }}
+					name="addForm"
+					component={AddFormAd}
 				/>
 			</Stack.Group>
 		</Stack.Navigator>
@@ -103,9 +110,10 @@ function BottomTabNavigator() {
 
 	return (
 		<BottomTab.Navigator
-			initialRouteName="Home"
+			initialRouteName="Search"
 			screenOptions={{
 				tabBarActiveTintColor: Colors[colorScheme].tint,
+				unmountOnBlur: true,
 			}}
 		>
 			<BottomTab.Screen

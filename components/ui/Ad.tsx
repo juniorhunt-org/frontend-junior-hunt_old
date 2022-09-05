@@ -1,12 +1,13 @@
 import { View, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import React, { FC } from "react";
-import { IAd } from "../../types";
+import React, { FC, useEffect, useState } from "react";
+import { IAd, NumberToWeekDay, Schedule } from "../../types";
 import styled from "styled-components/native";
 import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
 import Button from "./Button";
 import { useAd } from "../../hooks/useAd";
+import { useAuth } from "../../hooks/useAuth";
 
 interface IAdProps {
 	ad: IAd;
@@ -15,7 +16,19 @@ interface IAdProps {
 
 const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 	const colorscheme = useColorScheme();
-	const { setAd } = useAd();
+	const { setAd, deleteReplyAd, getSchedule } = useAd();
+	const { user } = useAuth();
+	const [schedule, setSchedule] = useState<Schedule>({} as Schedule);
+
+	const getScheduleHandler = async () => {
+		setSchedule(await getSchedule(ad));
+		console.log(schedule);
+	};
+
+	useEffect(() => {
+		getScheduleHandler();
+		console.log(ad.users, user.detailInfo);
+	}, []);
 
 	const detailAd = () => {
 		setAd(ad);
@@ -23,11 +36,10 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 	};
 
 	const Wrapper = styled.View`
-		margin-top: 10px;
+		margin-top: 15px;
 		padding: 10px 10px;
 		background-color: ${Colors[colorscheme].background};
 		border-radius: 10px;
-		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 		border: 2px solid ${Colors[colorscheme].tint};
 	`;
 
@@ -49,7 +61,15 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 	`;
 
 	return (
-		<Wrapper>
+		<Wrapper
+			style={{
+				shadowColor: "#000",
+				shadowOffset: { width: 0, height: 2 },
+				shadowOpacity: 0.25,
+				shadowRadius: 3.84,
+				elevation: 5,
+			}}
+		>
 			<Title>{ad.title}</Title>
 			<Intro>
 				{ad.description.length > 47
@@ -58,10 +78,29 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 			</Intro>
 			<Intro>
 				<FontAwesome name="user" size={14} /> Количество свободных вакансий:{" "}
-				{ad.limit}
+				{ad.limit - ad.users.length}
 			</Intro>
 			<Price>{ad.payment} ₽ за час</Price>
-			<Button title="Подробнее" onPress={detailAd} />
+			{schedule && (
+				<Price>
+					Время работы с {schedule.start} - {schedule.stop} в{" "}
+					{NumberToWeekDay[schedule.week_day]}
+				</Price>
+			)}
+
+			{user.detailInfo.id ? (
+				ad.users.includes(user.detailInfo.id) ? (
+					<Button
+						title="Отменить отклик"
+						danger={true}
+						onPress={() => deleteReplyAd(ad.id)}
+					/>
+				) : (
+					<Button title="Подробнее" onPress={detailAd} />
+				)
+			) : (
+				<Button title="Подробнее" onPress={detailAd} />
+			)}
 		</Wrapper>
 	);
 };

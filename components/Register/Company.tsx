@@ -1,10 +1,12 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useAsyncStorage } from "../../hooks/useAsyncStorage";
 import Field from "../ui/Field";
 import Row from "../ui/Row";
 import Button from "../ui/Button";
 import { Alert } from "react-native";
 import { useAuth } from "../../hooks/useAuth";
+import PhoneNumberField from "../ui/PhoneNumberField";
+import PhoneInput, { isValidNumber } from "react-native-phone-number-input";
 
 interface ICompany {
 	first_name: string;
@@ -19,29 +21,41 @@ interface ICompany {
 
 const Company: FC = () => {
 	const [data, setData] = useState<ICompany>({} as ICompany);
+	const [value, setValue] = useState("");
+	const [formattedValue, setFormattedValue] = useState("");
+
+	useEffect(() => {
+		console.log(value, formattedValue);
+	}, [value]);
 
 	const { register } = useAuth();
 
 	useAsyncStorage("company_registration_form", setData, data);
 
 	const submitHandler = async () => {
-		if (
-			data.password &&
-			data.second_password &&
-			data.first_name &&
-			data.last_name
-		) {
-			register(
-				data.email,
-				data.username,
-				data.password,
-				data.phone,
-				data.first_name,
-				data.last_name,
+		if (isValidNumber(formattedValue, "RU")) {
+			data.phone = formattedValue;
+			if (
+				data.password &&
+				data.second_password &&
+				data.first_name &&
+				data.last_name &&
 				data.company_name
-			);
+			) {
+				register(
+					data.email,
+					data.username,
+					data.password,
+					data.phone,
+					data.first_name,
+					data.last_name,
+					data.company_name
+				);
+			} else {
+				Alert.alert("Ошибка регистрации", "Все поля обязательные");
+			}
 		} else {
-			Alert.alert("Ошибка регистрации", "Все поля обязательные");
+			Alert.alert("Ошибка регистрации", "Введен некорректный номер телефона");
 		}
 	};
 	return (
@@ -58,12 +72,10 @@ const Company: FC = () => {
 				placeholder="Введите название компании"
 				contentType="givenName"
 			/>
-			<Field
-				val={data.phone}
-				onChange={(value) => setData({ ...data, phone: value })}
-				placeholder="Введите ваш номер телефона"
-				contentType="telephoneNumber"
-				keyboardType="number-pad"
+			<PhoneNumberField
+				value={value}
+				setFormatted={setFormattedValue}
+				setValue={setValue}
 			/>
 			<Field
 				val={data.email}

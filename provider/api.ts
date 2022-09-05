@@ -1,5 +1,7 @@
 import axios from "axios";
-import { IAd, ProfileUser } from "../types";
+import { ValueMap } from "react-native-simple-time-picker";
+import { ICreateAd } from "../screens/AddFormAd";
+import { IAd, ProfileUser, Schedule } from "../types";
 
 interface ILogin {
 	auth_token: string;
@@ -13,7 +15,7 @@ export const login = async (username: string, password: string) => {
 			password,
 		}
 	);
-	console.log(response.status);
+	console.log(response);
 	const { auth_token }: ILogin = response.data;
 	return auth_token;
 };
@@ -38,26 +40,21 @@ export const registerBase = async (
 };
 
 export const registerProfile = async (data: ProfileUser, token: string) => {
-	try {
-		const response = await axios.post(
-			"http://213.139.208.189/api/v1/profile_user/",
-			data,
-			{
-				headers: {
-					Authorization: `Token ${token}`,
-				},
-			}
-		);
-		console.log(response.data, "response register profile");
-		return response.data;
-	} catch (error) {
-		console.log(error);
-	}
+	const response = await axios.post(
+		"http://213.139.208.189/api/v1/profile_user/",
+		data,
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
+	return response.data;
 };
 
 export const detailInfo = async (token: string): Promise<ProfileUser> => {
 	const { data } = await axios.get(
-		"http://213.139.208.189/api/v1/profile_user/",
+		"http://213.139.208.189/api/v1/profile_user/?me=1",
 		{
 			headers: {
 				Authorization: `Token ${token}`,
@@ -77,9 +74,20 @@ export const getAdds = async (token: string): Promise<IAd[]> => {
 };
 
 export const requestAd = async (token: string, ad: IAd) => {
-	await axios.post(
+	const response = await axios.post(
 		`http://213.139.208.189/api/ads/add_user/`,
 		{ ad_id: ad.id },
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
+};
+
+export const deleteReplyAd = async (token: string, ad_id: number) => {
+	const response = await axios.delete(
+		`http://213.139.208.189/api/ads/add_user/?ad_id=${ad_id}`,
 		{
 			headers: {
 				Authorization: `Token ${token}`,
@@ -98,4 +106,86 @@ export const getReplyAds = async (token: string): Promise<IAd[]> => {
 		}
 	);
 	return data;
+};
+
+export const createAd = async (
+	token: string,
+	ad: ICreateAd,
+	user_id: number
+): Promise<IAd> => {
+	const { data } = await axios.post(
+		"http://213.139.208.189/api/ads/ad/",
+		{ ...ad, category: 1, owner: user_id },
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
+	return data;
+};
+
+export const createScheduleTime = async (
+	token: string,
+	start: ValueMap,
+	stop: ValueMap,
+	week_day: number,
+	ad: number
+) => {
+	const data = {
+		start: `${start.hours}:${start.minutes}:00`,
+		stop: `${stop.hours}:${stop.minutes}:00`,
+		week_day,
+		ad,
+	};
+	await axios.post("http://213.139.208.189/api/ads/schedule/", data, {
+		headers: {
+			Authorization: `Token ${token}`,
+		},
+	});
+};
+
+export const getSchedule = async (
+	token: string,
+	ad: number
+): Promise<Schedule[]> => {
+	const { data } = await axios.get(
+		`http://213.139.208.189/api/ads/schedule/?ad=${ad}`,
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
+	return data;
+};
+
+export const getUserInfo = async (user_id: number) => {
+	const { data } = await axios.get(
+		`http://213.139.208.189/api/v1/profile_user/${user_id}/`
+	);
+	return data;
+};
+
+export const getMyAds = async (token: string, ownerId: number) => {
+	const { data } = await axios.get(
+		`http://213.139.208.189/api/ads/ad/?owner=${ownerId}`,
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
+	return data;
+};
+
+export const deleteAd = async (token: string, ad_id: number) => {
+	const response = await axios.delete(
+		`http://213.139.208.189/api/ads/ad/${ad_id}/`,
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
 };
