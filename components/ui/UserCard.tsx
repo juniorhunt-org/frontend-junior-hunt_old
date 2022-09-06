@@ -8,9 +8,9 @@ import Colors from "../../constants/Colors";
 import { useAd } from "../../hooks/useAd";
 
 interface IUserCard {
-	ad: IAd;
+	ad?: IAd;
 	user_id: number;
-	navigation: any;
+	navigation?: any;
 	showAd?: boolean;
 }
 
@@ -66,7 +66,7 @@ const UserCard: FC<IUserCard> = ({
 			</Title>
 			<Intro>Описание: {profile.description}</Intro>
 
-			{showAd ? (
+			{showAd && ad ? (
 				<>
 					<Intro>Контактные данные: {profile.contacts}</Intro>
 					<TouchableOpacity

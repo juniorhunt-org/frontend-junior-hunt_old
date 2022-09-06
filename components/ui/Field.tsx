@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { KeyboardTypeOptions, TextInput } from "react-native";
-import styled from "styled-components/native";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
 import useColorScheme from "../../hooks/useColorScheme";
@@ -84,7 +83,7 @@ const Field: FC<IField> = ({
 			value={val}
 			multiline={multiline}
 			secureTextEntry={isSecure}
-			autoCapitalize="none"
+			autoCapitalize="sentences"
 			keyboardType={keyboardType}
 			textContentType={contentType}
 		/>

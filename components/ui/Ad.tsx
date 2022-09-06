@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
 import { IAd, NumberToWeekDay, Schedule } from "../../types";
@@ -15,11 +14,10 @@ interface IAdProps {
 }
 
 const Ad: FC<IAdProps> = ({ ad, navigator }) => {
-	const colorscheme = useColorScheme();
+	const colorscheme: "light" | "dark" = useColorScheme();
 	const { setAd, deleteReplyAd, getSchedule } = useAd();
 	const { user } = useAuth();
 	const [schedule, setSchedule] = useState<Schedule>({} as Schedule);
-
 	const getScheduleHandler = async () => {
 		setSchedule(await getSchedule(ad));
 		console.log(schedule);

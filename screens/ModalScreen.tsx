@@ -16,8 +16,8 @@ import UserCard from "../components/ui/UserCard";
 export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 	navigation,
 }) => {
-	const { ad, requestAd, getSchedule } = useAd();
-	const colorscheme = useColorScheme();
+	const { ad, requestAd, getSchedule, deleteAd } = useAd();
+	const colorscheme: "light" | "dark" = useColorScheme();
 	const { user } = useAuth();
 	const [schedule, setSchedule] = useState<Schedule>({} as Schedule);
 
@@ -98,7 +98,14 @@ export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 				/>
 				{user.detailInfo.is_company ? (
 					ad.owner == user.detailInfo.id ? (
-						<Button title="Удалить" danger={true} onPress={() => {}} />
+						<Button
+							title="Удалить"
+							danger={true}
+							onPress={() => {
+								deleteAd(ad.id);
+								navigation.navigate("Search");
+							}}
+						/>
 					) : (
 						<Button
 							title="Вы не можете откликаться на вакансии"

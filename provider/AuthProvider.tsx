@@ -9,6 +9,7 @@ import React, {
 import { Alert } from "react-native";
 import { ApiErrorAlert } from "../decorators";
 import { useAsyncStorage } from "../hooks/useAsyncStorage";
+import { IUpdateData } from "../screens/Account";
 import { IAd, ProfileUser, User } from "../types";
 import {
 	detailInfo,
@@ -17,6 +18,7 @@ import {
 	login,
 	registerBase,
 	registerProfile,
+	updateProfileData,
 } from "./api";
 
 interface IContext {
@@ -36,6 +38,7 @@ interface IContext {
 	fetchAds: () => Promise<IAd[]>;
 	setIsLoading: (val: SetStateAction<boolean>) => void;
 	getUserInfo: (user_id: number) => Promise<ProfileUser>;
+	updateUserProfile: (data: IUpdateData) => Promise<void>;
 }
 
 interface IProvider {
@@ -133,6 +136,16 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 		return ads;
 	};
 
+	const updateUserProfileHandler = async (data: IUpdateData) => {
+		setIsLoading(true);
+		const target = async () => {
+			await updateProfileData(user.token, data, user.detailInfo.id);
+			Alert.alert("Ваша информация обновлена");
+		};
+		await ApiErrorAlert(target);
+		setIsLoading(false);
+	};
+
 	const value = {
 		isLoading,
 		user,
@@ -142,6 +155,7 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 		fetchAds,
 		setIsLoading,
 		getUserInfo,
+		updateUserProfile: updateUserProfileHandler,
 	};
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

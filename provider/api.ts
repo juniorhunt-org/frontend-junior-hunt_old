@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ValueMap } from "react-native-simple-time-picker";
+import { IUpdateData } from "../screens/Account";
 import { ICreateAd } from "../screens/AddFormAd";
-import { IAd, ProfileUser, Schedule } from "../types";
+import { CreateUserProfile, IAd, ProfileUser, Schedule } from "../types";
 
 interface ILogin {
 	auth_token: string;
@@ -39,7 +40,10 @@ export const registerBase = async (
 	return response.data;
 };
 
-export const registerProfile = async (data: ProfileUser, token: string) => {
+export const registerProfile = async (
+	data: CreateUserProfile,
+	token: string
+) => {
 	const response = await axios.post(
 		"http://213.139.208.189/api/v1/profile_user/",
 		data,
@@ -182,6 +186,22 @@ export const getMyAds = async (token: string, ownerId: number) => {
 export const deleteAd = async (token: string, ad_id: number) => {
 	const response = await axios.delete(
 		`http://213.139.208.189/api/ads/ad/${ad_id}/`,
+		{
+			headers: {
+				Authorization: `Token ${token}`,
+			},
+		}
+	);
+};
+
+export const updateProfileData = async (
+	token: string,
+	data: IUpdateData,
+	user_id: number
+) => {
+	await axios.patch(
+		`http://213.139.208.189/api/v1/profile_user/${user_id}/`,
+		data,
 		{
 			headers: {
 				Authorization: `Token ${token}`,

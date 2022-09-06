@@ -8,6 +8,7 @@ import { IAd, Schedule } from "../types";
 import {
 	createAd,
 	createScheduleTime,
+	deleteAd,
 	deleteReplyAd,
 	getReplyAds,
 	getSchedule,
@@ -21,6 +22,7 @@ interface IContext {
 	getReplyAds: () => Promise<IAd[]>;
 	createAd: (ad: ICreateAd) => Promise<IAd>;
 	deleteReplyAd: (ad_id: number) => void;
+	deleteAd: (ad_id: number) => void;
 	createSchedule: (
 		ad: IAd,
 		start: ValueMap,
@@ -97,6 +99,14 @@ export const AdProvider: FC<IProvider> = ({ children }) => {
 		return value;
 	};
 
+	const deleteAdHandler = async (ad_id: number) => {
+		setIsLoading(true);
+		const target = async () => {
+			await deleteAd(user.token, ad_id);
+		};
+		await ApiErrorAlert(target);
+	};
+
 	const value = {
 		ad,
 		setAd,
@@ -106,6 +116,7 @@ export const AdProvider: FC<IProvider> = ({ children }) => {
 		deleteReplyAd: deleteReplyAdHandler,
 		createSchedule: createScheduleHandler,
 		getSchedule: getScheduleHandler,
+		deleteAd: deleteAdHandler,
 	};
 
 	return <AdContext.Provider value={value}>{children}</AdContext.Provider>;
