@@ -1,40 +1,43 @@
 {
-	"expo": {
-		"name": "junior-hunt",
-		"slug": "junior-hunt",
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./assets/images/logo.png",
-		"scheme": "myapp",
-		"userInterfaceStyle": "automatic",
-		"splash": {
-			"image": "./assets/images/logo.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": ["**/*"],
-		"ios": {
-			"supportsTablet": true
-		},
-		"android": {
-			"versionCode": 1,
-			"softwareKeyboardLayoutMode": "pan",
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/images/logo.png",
-				"backgroundColor": "#ffffff"
-			},
-			"package": "com.ivaneev.ivan.juniorhunt"
-		},
-		"web": {
-			"favicon": "./assets/images/favicon.png"
-		},
-		"extra": {
-			"eas": {
-				"projectId": "c8610e0b-84d5-4ee2-8bb4-46fdd766a372"
-			}
-		}
-	}
+  "expo": {
+    "name": "junior-hunt",
+    "slug": "junior-hunt",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ivaneev.ivan.juniorhunt"
+    },
+    "android": {
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "pan",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.ivaneev.ivan.juniorhunt"
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c8610e0b-84d5-4ee2-8bb4-46fdd766a372"
+      }
+    }
+  }
 }

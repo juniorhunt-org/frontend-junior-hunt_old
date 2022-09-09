@@ -20,6 +20,7 @@ import {
 	registerProfile,
 	updateProfileData,
 } from "./api";
+import { useNotification } from "../hooks/useNotification";
 
 interface IContext {
 	isLoading: boolean;
@@ -54,7 +55,7 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 
 	const loginHandler = async (username: string, password: string) => {
 		setIsLoading(true);
-		const targer = async () => {
+		const target = async () => {
 			console.log("login");
 			const token = await login(username, password);
 			console.log("token", token);
@@ -62,7 +63,7 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 			console.log("token", detail);
 			setUser({ ...user, token: token, detailInfo: detail });
 		};
-		await ApiErrorAlert(targer);
+		await ApiErrorAlert(target);
 		AsyncStorage.removeItem("login_form");
 		setIsLoading(false);
 	};
@@ -77,7 +78,7 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 		company_name?: string
 	) => {
 		setIsLoading(true);
-		const targer = async () => {
+		const target = async () => {
 			const base_user = await registerBase(username, password, email, phone);
 			const token = await login(username, password);
 			if (company_name === undefined)
@@ -116,11 +117,11 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
 				);
 			const detail = await detailInfo(token);
 			setUser({ ...user, token: token, detailInfo: detail });
-			AsyncStorage.removeItem("register_form_school");
-			AsyncStorage.removeItem("company_registration_form");
-			AsyncStorage.removeItem("is_company_form");
+			await AsyncStorage.removeItem("register_form_school");
+			await AsyncStorage.removeItem("company_registration_form");
+			await AsyncStorage.removeItem("is_company_form");
 		};
-		await ApiErrorAlert(targer);
+		ApiErrorAlert(target);
 		setIsLoading(false);
 	};
 

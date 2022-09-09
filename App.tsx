@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
@@ -7,6 +6,8 @@ import Navigation from "./navigation";
 import { AdProvider } from "./provider/AdProvider";
 import { AuthProvider } from "./provider/AuthProvider";
 import * as ScreenOrientation from "expo-screen-orientation";
+import React from "react";
+import { NotificationProvider } from "./provider/notifications";
 
 export default function App() {
 	const isLoadingComplete = useCachedResources();
@@ -19,12 +20,13 @@ export default function App() {
 	} else {
 		return (
 			<AuthProvider>
-				<AdProvider>
-					<SafeAreaProvider>
-						<Navigation colorScheme={colorScheme} />
-						<StatusBar />
-					</SafeAreaProvider>
-				</AdProvider>
+				<NotificationProvider>
+					<AdProvider>
+						<SafeAreaProvider>
+							<Navigation colorScheme={colorScheme} />
+						</SafeAreaProvider>
+					</AdProvider>
+				</NotificationProvider>
 			</AuthProvider>
 		);
 	}

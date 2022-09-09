@@ -12,6 +12,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import Button from "../components/ui/Button";
 import { useAuth } from "../hooks/useAuth";
 import UserCard from "../components/ui/UserCard";
+import { useNotification } from "../hooks/useNotification";
 
 export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 	navigation,
@@ -20,6 +21,7 @@ export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 	const colorscheme: "light" | "dark" = useColorScheme();
 	const { user } = useAuth();
 	const [schedule, setSchedule] = useState<Schedule>({} as Schedule);
+	const { sendPushNotification, getUserNotificationToken } = useNotification();
 
 	const getScheduleHandler = async () => {
 		setSchedule(await getSchedule(ad));
@@ -62,11 +64,17 @@ export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 		font-weight: 500;
 	`;
 
-	const submitHandler = () => {
+	const submitHandler = async () => {
 		requestAd();
 		Alert.alert(
 			"Вы успешко откликнулись на объявления",
 			"Ждите пока на вашу заявку ответят"
+		);
+		const token = await getUserNotificationToken(ad.owner);
+		await sendPushNotification(
+			token,
+			"Здравствуйте, на вашу вакансию откликнулся, посмотрите его профиль",
+			"Откройте главную страницу"
 		);
 		navigation.goBack();
 	};

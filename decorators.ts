@@ -5,7 +5,7 @@ export async function ApiErrorAlert(targer: () => any) {
 		const value = await targer();
 		return value;
 	} catch (error: any) {
-		console.log("error", error.response);
+		console.log("error", error);
 		const errorData = error.response.data;
 		Object.keys(errorData).forEach((key: any) => {
 			let fieldsKey = key;

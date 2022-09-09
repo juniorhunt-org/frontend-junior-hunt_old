@@ -7,6 +7,7 @@ import { Alert } from "react-native";
 import { useAuth } from "../../hooks/useAuth";
 import PhoneNumberField from "../ui/PhoneNumberField";
 import PhoneInput, { isValidNumber } from "react-native-phone-number-input";
+import { useNotification } from "../../hooks/useNotification";
 
 interface ICompany {
 	first_name: string;
