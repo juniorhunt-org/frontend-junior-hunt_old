@@ -20,7 +20,6 @@ import {
 	registerProfile,
 	updateProfileData,
 } from "./api";
-import { useNotification } from "../hooks/useNotification";
 
 interface IContext {
 	isLoading: boolean;

@@ -4,6 +4,7 @@ import Button from "./ui/Button";
 import { useAuth } from "../hooks/useAuth";
 import Field from "./ui/Field";
 import { useAsyncStorage } from "../hooks/useAsyncStorage";
+import PasswordField from "./ui/PasswordField";
 
 interface IData {
 	username: string;
@@ -31,11 +32,10 @@ const Login = () => {
 				contentType="username"
 				placeholder="Введите никнейм"
 			/>
-			<Field
-				onChange={(val) => setData({ ...data, password: val })}
+			<PasswordField
 				val={data.password}
-				contentType="password"
-				isSecure={true}
+				width={100}
+				onChange={(value) => setData({ ...data, password: value })}
 				placeholder="Введите пароль"
 			/>
 			<Button title="Войти" onPress={loginHandler} />

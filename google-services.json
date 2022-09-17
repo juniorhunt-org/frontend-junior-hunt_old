@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "22291576742",
+    "project_id": "junior-hunt",
+    "storage_bucket": "junior-hunt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22291576742:android:ecfa8cfeb6cae2873f4167",
+        "android_client_info": {
+          "package_name": "com.ivaneev.ivan.juniorhunt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22291576742-v5qhnm437npn7iemaf88scc7on08a7m1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC05w0jDGuAHvbgG6939GZz3hWAAobdMnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22291576742-v5qhnm437npn7iemaf88scc7on08a7m1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

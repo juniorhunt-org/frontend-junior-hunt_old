@@ -7,24 +7,18 @@ import UsersList from "../components/UsersList";
 import { useAd } from "../hooks/useAd";
 import { useAuth } from "../hooks/useAuth";
 import useColorScheme from "../hooks/useColorScheme";
-import { useNotification } from "../hooks/useNotification";
 import { RootTabScreenProps } from "../types";
 
 export const Home: FC<RootTabScreenProps<"Home">> = ({ navigation }) => {
 	const { getReplyAds } = useAd();
 	const { user } = useAuth();
-	const { createUserNotificationToken } = useNotification();
-
-	useEffect(() => {
-		createUserNotificationToken(1);
-	}, []);
 
 	return (
 		<FadeInView>
 			<Layout>
 				{user.detailInfo.is_company ? (
 					<>
-						<Label>Пользователя откликнувшиеся на ваши объявления</Label>
+						<Label>Пользователи откликнувшиеся на ваши объявления</Label>
 						<UsersList navigation={navigation} />
 					</>
 				) : (

@@ -7,6 +7,7 @@ export async function ApiErrorAlert(targer: () => any) {
 	} catch (error: any) {
 		console.log("error", error);
 		const errorData = error.response.data;
+		let errorMessage = "";
 		Object.keys(errorData).forEach((key: any) => {
 			let fieldsKey = key;
 			switch (key) {
@@ -44,7 +45,9 @@ export async function ApiErrorAlert(targer: () => any) {
 					fieldsKey = "Заголовок: ";
 					break;
 			}
-			Alert.alert("Ошибка регистрации", fieldsKey + errorData[key][0]);
+			errorMessage = `${errorMessage}${fieldsKey + errorData[key][0] + "\n"}`;
 		});
+		console.log(errorMessage);
+		Alert.alert("Ошибка", errorMessage);
 	}
 }

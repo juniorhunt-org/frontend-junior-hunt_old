@@ -65,7 +65,6 @@ const UserCard: FC<IUserCard> = ({
 				Пользователь: {profile.first_name} {profile.last_name}
 			</Title>
 			<Intro>Описание: {profile.description}</Intro>
-
 			{showAd && ad ? (
 				<>
 					<Intro>Контактные данные: {profile.contacts}</Intro>
@@ -73,7 +72,7 @@ const UserCard: FC<IUserCard> = ({
 						onPress={() => {
 							console.log("click");
 							setAd(ad);
-							navigation.navigate("Modal");
+							navigation.navigate("AdDetail");
 						}}
 					>
 						<Price>По объявлению: {ad.title}</Price>

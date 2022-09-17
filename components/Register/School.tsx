@@ -7,6 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useAsyncStorage } from "../../hooks/useAsyncStorage";
 import PhoneNumberField from "../ui/PhoneNumberField";
 import { isValidNumber } from "react-native-phone-number-input";
+import PasswordField from "../ui/PasswordField";
 
 interface IData {
 	first_name: string;
@@ -88,24 +89,20 @@ const School = () => {
 				/>
 			</Row>
 			<Row>
-				<Field
-					width={49}
+				<PasswordField
 					val={data.password}
-					isSecure={true}
-					contentType="password"
+					width={49}
 					onChange={(value) => setData({ ...data, password: value })}
 					placeholder="Введите пароль"
 				/>
-				<Field
-					width={49}
-					contentType="password"
-					isSecure={true}
+				<PasswordField
 					val={data.second_password}
+					width={49}
 					onChange={(value) => setData({ ...data, second_password: value })}
-					placeholder="Потвердите ваш пароль"
+					placeholder="Введите пароль"
 				/>
 			</Row>
-			<Button title="Зарегестрироваться" onPress={submitHandler} />
+			<Button title="Зарегистрироваться" onPress={submitHandler} />
 		</>
 	);
 };

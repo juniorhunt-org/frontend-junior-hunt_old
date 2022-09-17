@@ -10,11 +10,17 @@ interface IAdList {
 	getData: () => Promise<IAd[]>;
 	navigation: any;
 	filtering?: boolean;
+	myAds?: boolean;
 }
 
-const AdList: FC<IAdList> = ({ getData, navigation, filtering = true }) => {
+const AdList: FC<IAdList> = ({
+	getData,
+	navigation,
+	filtering = true,
+	myAds = false,
+}) => {
 	const [data, setData] = useState<IAd[]>([]);
-	const { isLoading } = useAuth();
+	const { isLoading, user } = useAuth();
 
 	const update = () => {
 		getData().then((data) => {
@@ -30,23 +36,21 @@ const AdList: FC<IAdList> = ({ getData, navigation, filtering = true }) => {
 
 	return (
 		<FadeInView>
-			{data.length > 0 ? (
-				<FlatList
-					data={
-						filtering
-							? data.filter((item) => item.limit - item.users.length > 0)
-							: data
-					}
-					showsVerticalScrollIndicator={false}
-					refreshControl={
-						<RefreshControl refreshing={isLoading} onRefresh={update} />
-					}
-					renderItem={({ item }) => <Ad ad={item} navigator={navigation} />}
-					keyExtractor={(item) => `ad ${item.id}`}
-				/>
-			) : (
-				<Label>Вы не откликнулись ни на одно объявление :(</Label>
-			)}
+			<FlatList
+				data={
+					myAds
+						? data.filter((item) => item.owner === user.detailInfo.id)
+						: filtering
+						? data.filter((item) => item.limit - item.users.length > 0)
+						: data
+				}
+				// showsVerticalScrollIndicator={false}
+				refreshControl={
+					<RefreshControl refreshing={isLoading} onRefresh={update} />
+				}
+				renderItem={({ item }) => <Ad ad={item} navigator={navigation} />}
+				keyExtractor={(item) => `ad ${item.id}`}
+			/>
 		</FadeInView>
 	);
 };

@@ -1,4 +1,9 @@
-import { Modal } from "react-native";
+import {
+	KeyboardAvoidingView,
+	Modal,
+	Platform,
+	ScrollView,
+} from "react-native";
 import React, { useState } from "react";
 import Button from "../ui/Button";
 import School from "./School";
@@ -13,19 +18,25 @@ const Register = () => {
 		<>
 			<Row>
 				<Button
-					title="Я школьник"
+					title="Я исполнитель"
 					active={!isCompany}
 					width={48}
 					onPress={() => setIsCompany(false)}
 				/>
 				<Button
-					title="Я бизнес"
+					title="Я работадатель"
 					width={48}
 					active={isCompany}
 					onPress={() => setIsCompany(true)}
 				/>
 			</Row>
-			<>{isCompany ? <Company />  : <School />}</>
+			<KeyboardAvoidingView
+				keyboardVerticalOffset={Platform.select({ ios: 100, android: 100 })}
+				style={{ flex: 1 }}
+				behavior="padding"
+			>
+				<ScrollView>{isCompany ? <Company /> : <School />}</ScrollView>
+			</KeyboardAvoidingView>
 		</>
 	);
 };

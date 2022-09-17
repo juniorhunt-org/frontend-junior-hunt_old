@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useAsyncStorage } from "../../hooks/useAsyncStorage";
 import Field from "../ui/Field";
 import Row from "../ui/Row";
@@ -6,8 +6,8 @@ import Button from "../ui/Button";
 import { Alert } from "react-native";
 import { useAuth } from "../../hooks/useAuth";
 import PhoneNumberField from "../ui/PhoneNumberField";
-import PhoneInput, { isValidNumber } from "react-native-phone-number-input";
-import { useNotification } from "../../hooks/useNotification";
+import { isValidNumber } from "react-native-phone-number-input";
+import PasswordField from "../ui/PasswordField";
 
 interface ICompany {
 	first_name: string;
@@ -100,24 +100,20 @@ const Company: FC = () => {
 				/>
 			</Row>
 			<Row>
-				<Field
-					width={49}
+				<PasswordField
 					val={data.password}
-					isSecure={true}
-					contentType="password"
+					width={49}
 					onChange={(value) => setData({ ...data, password: value })}
 					placeholder="Введите пароль"
 				/>
-				<Field
-					width={49}
-					contentType="password"
-					isSecure={true}
+				<PasswordField
 					val={data.second_password}
+					width={49}
 					onChange={(value) => setData({ ...data, second_password: value })}
-					placeholder="Потвердите ваш пароль"
+					placeholder="Введите пароль"
 				/>
 			</Row>
-			<Button title="Зарегестрироваться" onPress={submitHandler} />
+			<Button title="Зарегистрироваться" onPress={submitHandler} />
 		</>
 	);
 };

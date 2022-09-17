@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components/native";
 import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
+import Layout from "../../constants/Layout";
 
 interface IButton {
 	title: string;
@@ -23,7 +24,7 @@ const Button: FC<IButton> = ({
 	const colorscheme = useColorScheme();
 	const Wrapper = styled.TouchableOpacity`
 		width: ${width}%;
-		padding: 15px;
+		padding: ${Layout.isSmallDevice ? 10 : 15}px;
 		border-radius: 10px;
 		background-color: ${danger
 			? Colors[colorscheme].dangerColor

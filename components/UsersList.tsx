@@ -26,25 +26,21 @@ const UsersList: FC<{ navigation: any }> = ({ navigation }) => {
 
 	return (
 		<FadeInView>
-			{myAds.length > 0 ? (
-				<FlatList
-					data={myAds}
-					showsVerticalScrollIndicator={false}
-					refreshControl={
-						<RefreshControl refreshing={isLoading} onRefresh={getData} />
-					}
-					renderItem={({ item }) => (
-						<>
-							{item.users.map((user_id) => (
-								<UserCard navigation={navigation} user_id={user_id} ad={item} />
-							))}
-						</>
-					)}
-					keyExtractor={(item) => `user ${item.id}`}
-				/>
-			) : (
-				<Label>На ваши объявления никто не откликнулся :(</Label>
-			)}
+			<FlatList
+				data={myAds}
+				showsVerticalScrollIndicator={false}
+				refreshControl={
+					<RefreshControl refreshing={isLoading} onRefresh={getData} />
+				}
+				renderItem={({ item }) => (
+					<>
+						{item.users.map((user_id) => (
+							<UserCard navigation={navigation} user_id={user_id} ad={item} />
+						))}
+					</>
+				)}
+				keyExtractor={(item) => `user ${item.id}`}
+			/>
 		</FadeInView>
 	);
 };

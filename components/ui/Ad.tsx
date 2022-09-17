@@ -30,7 +30,7 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 
 	const detailAd = () => {
 		setAd(ad);
-		navigator.navigate("Modal");
+		navigator.navigate("AdDetail");
 	};
 
 	const Wrapper = styled.View`

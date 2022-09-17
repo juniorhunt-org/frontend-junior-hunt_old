@@ -5,7 +5,12 @@ import styled from "styled-components/native";
 import useColorScheme from "../hooks/useColorScheme";
 
 import { useAd } from "../hooks/useAd";
-import { NumberToWeekDay, RootTabScreenProps, Schedule } from "../types";
+import {
+	NumberToWeekDay,
+	RootStackScreenProps,
+	RootTabScreenProps,
+	Schedule,
+} from "../types";
 import Colors from "../constants/Colors";
 import Layout from "../components/layout/Layout";
 import { FontAwesome } from "@expo/vector-icons";
@@ -14,17 +19,19 @@ import { useAuth } from "../hooks/useAuth";
 import UserCard from "../components/ui/UserCard";
 import { useNotification } from "../hooks/useNotification";
 
-export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
+export const AddDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 	navigation,
 }) => {
 	const { ad, requestAd, getSchedule, deleteAd } = useAd();
 	const colorscheme: "light" | "dark" = useColorScheme();
-	const { user } = useAuth();
+	const { user, setIsLoading } = useAuth();
 	const [schedule, setSchedule] = useState<Schedule>({} as Schedule);
-	const { sendPushNotification, getUserNotificationToken } = useNotification();
+	const { sendPushNotification } = useNotification();
 
 	const getScheduleHandler = async () => {
+		setIsLoading(true);
 		setSchedule(await getSchedule(ad));
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -70,11 +77,10 @@ export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 			"Вы успешко откликнулись на объявления",
 			"Ждите пока на вашу заявку ответят"
 		);
-		const token = await getUserNotificationToken(ad.owner);
 		await sendPushNotification(
-			token,
-			"Здравствуйте, на вашу вакансию откликнулся, посмотрите его профиль",
-			"Откройте главную страницу"
+			ad.owner,
+			"Посмотрите отклившувшихся пользователей",
+			"Здравствуйте, на вашу вакансию откликнулся, посмотрите его профиль"
 		);
 		navigation.goBack();
 	};
@@ -86,7 +92,7 @@ export const ModalScreen: FC<RootTabScreenProps<"Modal">> = ({
 				<Description>{ad.description}</Description>
 				<Description>
 					<FontAwesome name="user" size={14} /> Количество свободных вакансий:{" "}
-					{ad.limit}
+					{ad.limit - ad.users.length}
 				</Description>
 				<Description>
 					Адрес: <Address>{ad.address}</Address>

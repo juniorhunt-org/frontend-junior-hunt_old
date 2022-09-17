@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+import { FontAwesome } from "@expo/vector-icons";
+import React, { FC, useState } from "react";
 import { KeyboardTypeOptions, TextInput } from "react-native";
 import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
@@ -56,7 +57,6 @@ const Field: FC<IField> = ({
 }) => {
 	const colorscheme = useColorScheme();
 	const { isSmallDevice } = Layout;
-
 	return (
 		<TextInput
 			blurOnSubmit={true}

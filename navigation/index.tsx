@@ -23,8 +23,9 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import Auth from "../screens/Auth";
-import { ModalScreen } from "../screens/ModalScreen";
+import { AddDetailScreen } from "../screens/ModalScreen";
 import AddFormAd from "../screens/AddFormAd";
+import Loader from "../components/Loader";
 
 export default function Navigation({
 	colorScheme,
@@ -44,7 +45,8 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-	const { user } = useAuth();
+	const { user, isLoading } = useAuth();
+
 	return (
 		<Stack.Navigator>
 			{user.detailInfo ? (
@@ -55,51 +57,27 @@ function RootNavigator() {
 						headerShown: false,
 					}}
 				/>
+			) : isLoading ? (
+				<Stack.Screen
+					name="Loader"
+					component={Loader}
+					options={{ headerShown: false }}
+				/>
 			) : (
 				<Stack.Screen
 					name="Auth"
-					component={AuthBottomTabNavigator}
-					options={{ headerShown: false }}
+					component={Auth}
+					options={{ headerShown: true, title: "Авторизация" }}
 				/>
 			)}
 			<Stack.Group screenOptions={{ presentation: "modal" }}>
 				<Stack.Screen
 					options={{ title: "Объявление" }}
-					name="Modal"
-					component={ModalScreen}
-				/>
-				<Stack.Screen
-					options={{ title: "Создания объявления" }}
-					name="addForm"
-					component={AddFormAd}
+					name="AdDetail"
+					component={AddDetailScreen}
 				/>
 			</Stack.Group>
 		</Stack.Navigator>
-	);
-}
-
-const bottomTabAuth = createBottomTabNavigator<AuthTabParamList>();
-
-function AuthBottomTabNavigator() {
-	const colorScheme = useColorScheme();
-	return (
-		<bottomTabAuth.Navigator
-			initialRouteName="Auth"
-			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme].tint,
-			}}
-		>
-			<bottomTabAuth.Screen
-				name="Auth"
-				component={Auth}
-				options={() => ({
-					title: "Авторизация",
-					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="user-circle" color={color} />
-					),
-				})}
-			/>
-		</bottomTabAuth.Navigator>
 	);
 }
 
@@ -107,7 +85,7 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
 	const colorScheme = useColorScheme();
-
+	const { user } = useAuth();
 	return (
 		<BottomTab.Navigator
 			initialRouteName="Search"
@@ -128,10 +106,22 @@ function BottomTabNavigator() {
 				name="Search"
 				component={Search}
 				options={{
-					title: "Поиск",
-					tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
+					title: "Объявления",
+					tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
 				}}
 			/>
+			{user.detailInfo.is_company && (
+				<BottomTab.Screen
+					options={{
+						title: "Объявление",
+						tabBarIcon: ({ color }) => (
+							<TabBarIcon name="plus-circle" color={color} />
+						),
+					}}
+					name="AddForm"
+					component={AddFormAd}
+				/>
+			)}
 			<BottomTab.Screen
 				name="Account"
 				component={Account}
