@@ -67,18 +67,19 @@ const UserCard: FC<IUserCard> = ({
 					Пользователь: {profile.first_name} {profile.last_name}
 				</Title>
 				<Intro>Описание: {profile.description}</Intro>
-				{showAd && ad ? (
+				{!profile.is_company ? (
 					<>
 						<Intro>Контактные данные: {profile.contacts}</Intro>
-						<TouchableOpacity
-							onPress={() => {
-								console.log("click");
-								setAd(ad);
-								navigation.navigate("AdDetail");
-							}}
-						>
-							<Price>По объявлению: {ad.title}</Price>
-						</TouchableOpacity>
+						{ad && (
+							<TouchableOpacity
+								onPress={() => {
+									setAd(ad);
+									navigation.navigate("AdDetail");
+								}}
+							>
+								<Price>По объявлению: {ad.title}</Price>
+							</TouchableOpacity>
+						)}
 					</>
 				) : (
 					<>

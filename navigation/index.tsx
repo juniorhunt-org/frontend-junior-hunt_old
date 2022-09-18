@@ -67,7 +67,10 @@ function RootNavigator() {
 				<Stack.Screen
 					name="Auth"
 					component={Auth}
-					options={{ headerShown: true, title: "Авторизация" }}
+					options={{
+						headerShown: true,
+						title: "Junior Hunt",
+					}}
 				/>
 			)}
 			<Stack.Group screenOptions={{ presentation: "modal" }}>
@@ -88,7 +91,7 @@ function BottomTabNavigator() {
 	const { user } = useAuth();
 	return (
 		<BottomTab.Navigator
-			initialRouteName="Search"
+			initialRouteName="Home"
 			screenOptions={{
 				tabBarActiveTintColor: Colors[colorScheme].tint,
 				unmountOnBlur: true,

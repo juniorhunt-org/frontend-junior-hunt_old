@@ -30,7 +30,7 @@ const Auth: FC<RootStackScreenProps<"Auth">> = ({ navigation }) => {
 					{isLogin ? <Login /> : <Register />}
 					<SafeAreaView>
 						<Button
-							title={isLogin ? "зарегестироваться" : "войти"}
+							title={isLogin ? "Зарегистрироваться" : "Войти"}
 							onPress={() => setIsLogin(!isLogin)}
 						/>
 					</SafeAreaView>
