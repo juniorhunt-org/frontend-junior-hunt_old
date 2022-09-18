@@ -6,6 +6,7 @@ import useColorScheme from "../../hooks/useColorScheme";
 import styled from "styled-components/native";
 import Colors from "../../constants/Colors";
 import { useAd } from "../../hooks/useAd";
+import { FadeInView } from "../FadeInView";
 
 interface IUserCard {
 	ad?: IAd;
@@ -60,30 +61,32 @@ const UserCard: FC<IUserCard> = ({
 	}, []);
 
 	return (
-		<Wrapper>
-			<Title>
-				Пользователь: {profile.first_name} {profile.last_name}
-			</Title>
-			<Intro>Описание: {profile.description}</Intro>
-			{showAd && ad ? (
-				<>
-					<Intro>Контактные данные: {profile.contacts}</Intro>
-					<TouchableOpacity
-						onPress={() => {
-							console.log("click");
-							setAd(ad);
-							navigation.navigate("AdDetail");
-						}}
-					>
-						<Price>По объявлению: {ad.title}</Price>
-					</TouchableOpacity>
-				</>
-			) : (
-				<>
-					<Intro>Компания: {profile.company_name}</Intro>
-				</>
-			)}
-		</Wrapper>
+		<FadeInView>
+			<Wrapper>
+				<Title>
+					Пользователь: {profile.first_name} {profile.last_name}
+				</Title>
+				<Intro>Описание: {profile.description}</Intro>
+				{showAd && ad ? (
+					<>
+						<Intro>Контактные данные: {profile.contacts}</Intro>
+						<TouchableOpacity
+							onPress={() => {
+								console.log("click");
+								setAd(ad);
+								navigation.navigate("AdDetail");
+							}}
+						>
+							<Price>По объявлению: {ad.title}</Price>
+						</TouchableOpacity>
+					</>
+				) : (
+					<>
+						<Intro>Компания: {profile.company_name}</Intro>
+					</>
+				)}
+			</Wrapper>
+		</FadeInView>
 	);
 };
 

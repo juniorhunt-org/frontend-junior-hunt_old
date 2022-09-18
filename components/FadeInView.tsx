@@ -1,6 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { FC, useRef } from "react";
 import { Animated } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface IFadeInView {
 	children: React.ReactNode;
@@ -12,13 +13,13 @@ export const FadeInView: FC<IFadeInView> = ({ children }) => {
 	useFocusEffect(() => {
 		Animated.timing(fadeAnim, {
 			toValue: 1,
-			duration: 250,
+			duration: 500,
 			useNativeDriver: true,
 		}).start();
 		return () => {
 			Animated.timing(fadeAnim, {
 				toValue: 0,
-				duration: 250,
+				duration: 500,
 				useNativeDriver: true,
 			}).start();
 		};

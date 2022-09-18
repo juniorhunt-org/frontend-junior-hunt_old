@@ -31,52 +31,54 @@ const Account: FC = () => {
 				title={isUpdate ? "Посмотреть информацию" : "Обновить информацию"}
 			/>
 			{isUpdate ? (
-				<KeyboardAvoidingView
-					keyboardVerticalOffset={Platform.select({ ios: 100, android: 100 })}
-					style={{ flex: 1 }}
-					behavior="padding"
-				>
-					<ScrollView>
-						<View
-							style={{
-								marginTop: 15,
-								padding: 10,
-								backgroundColor: Colors[colorscheme].background,
-								borderRadius: 10,
-								borderWidth: 2,
-								shadowColor: "#000",
-								shadowOffset: { width: 0, height: 2 },
-								shadowOpacity: 0.5,
-								shadowRadius: 3.84,
-								elevation: 5,
-								borderColor: Colors[colorscheme].tint,
-							}}
-						>
-							<Label>
-								{user.detailInfo.first_name} {user.detailInfo.last_name}
-							</Label>
-							<Field
-								placeholder="Изменить описание"
-								multiline
-								onChange={(value) => setData({ ...data, description: value })}
-								val={data.description}
-							/>
-							<Field
-								multiline
-								placeholder="Изменить контактные данные"
-								onChange={(value) => setData({ ...data, contacts: value })}
-								val={data.contacts}
-							/>
-							<Button
-								title="Обновить информацию"
-								onPress={() => {
-									updateUserProfile(data);
-									setIsUpdate(!isUpdate);
+				<FadeInView>
+					<KeyboardAvoidingView
+						keyboardVerticalOffset={Platform.select({ ios: 100, android: 100 })}
+						style={{ flex: 1 }}
+						behavior="padding"
+					>
+						<ScrollView>
+							<View
+								style={{
+									marginTop: 15,
+									padding: 10,
+									backgroundColor: Colors[colorscheme].background,
+									borderRadius: 10,
+									borderWidth: 2,
+									shadowColor: "#000",
+									shadowOffset: { width: 0, height: 2 },
+									shadowOpacity: 0.5,
+									shadowRadius: 3.84,
+									elevation: 5,
+									borderColor: Colors[colorscheme].tint,
 								}}
-							/>
-						</View>
-					</ScrollView>
-				</KeyboardAvoidingView>
+							>
+								<Label>
+									{user.detailInfo.first_name} {user.detailInfo.last_name}
+								</Label>
+								<Field
+									placeholder="Изменить описание"
+									multiline
+									onChange={(value) => setData({ ...data, description: value })}
+									val={data.description}
+								/>
+								<Field
+									multiline
+									placeholder="Изменить контактные данные"
+									onChange={(value) => setData({ ...data, contacts: value })}
+									val={data.contacts}
+								/>
+								<Button
+									title="Обновить информацию"
+									onPress={() => {
+										updateUserProfile(data);
+										setIsUpdate(!isUpdate);
+									}}
+								/>
+							</View>
+						</ScrollView>
+					</KeyboardAvoidingView>
+				</FadeInView>
 			) : (
 				<UserCard showAd={false} user_id={user.detailInfo.id} />
 			)}

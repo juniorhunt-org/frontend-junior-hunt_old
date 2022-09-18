@@ -1,21 +1,17 @@
-import {
-	KeyboardAvoidingView,
-	Modal,
-	Platform,
-	ScrollView,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import React, { useState } from "react";
 import Button from "../ui/Button";
 import School from "./School";
 import Row from "../ui/Row";
 import Company from "./Company";
 import { useAsyncStorage } from "../../hooks/useAsyncStorage";
+import { FadeInView } from "../FadeInView";
 
 const Register = () => {
 	const [isCompany, setIsCompany] = useState(false);
 	useAsyncStorage("is_company_form", setIsCompany, isCompany);
 	return (
-		<>
+		<FadeInView>
 			<Row>
 				<Button
 					title="Я исполнитель"
@@ -24,7 +20,7 @@ const Register = () => {
 					onPress={() => setIsCompany(false)}
 				/>
 				<Button
-					title="Я работадатель"
+					title="Я работодатель"
 					width={48}
 					active={isCompany}
 					onPress={() => setIsCompany(true)}
@@ -37,7 +33,7 @@ const Register = () => {
 			>
 				<ScrollView>{isCompany ? <Company /> : <School />}</ScrollView>
 			</KeyboardAvoidingView>
-		</>
+		</FadeInView>
 	);
 };
 

@@ -7,27 +7,28 @@ import { AuthProvider } from "./provider/AuthProvider";
 import * as ScreenOrientation from "expo-screen-orientation";
 import React from "react";
 import NotificationProvider from "./provider/NotificationProvider";
+import { StatusBar } from "expo-status-bar";
+import { Platform } from "react-native";
 
 export default function App() {
-	const isLoadingComplete = useCachedResources();
-	const colorScheme = useColorScheme();
-	ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+  const isLoadingComplete = useCachedResources();
+  const colorScheme = useColorScheme();
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
-	if (!isLoadingComplete) {
-		return null;
-	} else {
-		return (
-			<SafeAreaView style={{ width: "100%", height: "97%" }}>
-				<AuthProvider>
-					<NotificationProvider>
-						<AdProvider>
-							<SafeAreaProvider>
-								<Navigation colorScheme={colorScheme} />
-							</SafeAreaProvider>
-						</AdProvider>
-					</NotificationProvider>
-				</AuthProvider>
-			</SafeAreaView>
-		);
-	}
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
+      <AuthProvider>
+        <NotificationProvider>
+          <AdProvider>
+            <SafeAreaProvider>
+              <Navigation colorScheme={colorScheme} />
+            </SafeAreaProvider>
+          </AdProvider>
+        </NotificationProvider>
+        <StatusBar style="auto" />
+      </AuthProvider>
+    );
+  }
 }

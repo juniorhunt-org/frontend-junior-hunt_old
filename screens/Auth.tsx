@@ -1,10 +1,12 @@
 import React, { FC, useState } from "react";
 import { TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 import { FadeInView } from "../components/FadeInView";
 import Layout from "../components/layout/Layout";
 import Login from "../components/Login";
 import Register from "../components/Register/Register";
+import Button from "../components/ui/Button";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { RootStackScreenProps } from "../types";
@@ -26,9 +28,12 @@ const Auth: FC<RootStackScreenProps<"Auth">> = ({ navigation }) => {
 			<Layout>
 				<>
 					{isLogin ? <Login /> : <Register />}
-					<TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
-						<SmallTitle>{isLogin ? "Зарегистрироваться" : "Войти"}</SmallTitle>
-					</TouchableOpacity>
+					<SafeAreaView>
+						<Button
+							title={isLogin ? "зарегестироваться" : "войти"}
+							onPress={() => setIsLogin(!isLogin)}
+						/>
+					</SafeAreaView>
 				</>
 			</Layout>
 		</FadeInView>

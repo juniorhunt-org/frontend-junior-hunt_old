@@ -1,6 +1,7 @@
 import React, { FC, useRef } from "react";
 import PhoneInput from "react-native-phone-number-input";
 import Colors from "../../constants/Colors";
+import Layout from "../../constants/Layout";
 import useColorScheme from "../../hooks/useColorScheme";
 
 interface IPhoneNumberField {
@@ -16,12 +17,13 @@ const PhoneNumberField: FC<IPhoneNumberField> = ({
 }) => {
 	const colorscheme = useColorScheme();
 	const phoneInput = useRef<PhoneInput>(null);
+	const { isSmallDevice } = Layout;
 
 	return (
 		<PhoneInput
 			placeholder="Введите номер телефона"
 			textInputStyle={{
-				fontSize: 14,
+				fontSize: isSmallDevice ? 9 : 11,
 				height: 100,
 				color: Colors[colorscheme].text,
 			}}

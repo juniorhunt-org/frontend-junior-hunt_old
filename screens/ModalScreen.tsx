@@ -73,10 +73,7 @@ export const AddDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 
 	const submitHandler = async () => {
 		requestAd();
-		Alert.alert(
-			"Вы успешко откликнулись на объявления",
-			"Ждите пока на вашу заявку ответят"
-		);
+		Alert.alert("Вы успешко откликнулись на объявления");
 		await sendPushNotification(
 			ad.owner,
 			"Посмотрите отклившувшихся пользователей",
@@ -130,8 +127,6 @@ export const AddDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 				) : (
 					<Button title="Откликнуться" onPress={submitHandler} />
 				)}
-
-				<StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
 			</Wrapper>
 		</Layout>
 	);

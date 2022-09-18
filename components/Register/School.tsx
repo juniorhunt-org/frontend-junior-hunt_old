@@ -8,6 +8,7 @@ import { useAsyncStorage } from "../../hooks/useAsyncStorage";
 import PhoneNumberField from "../ui/PhoneNumberField";
 import { isValidNumber } from "react-native-phone-number-input";
 import PasswordField from "../ui/PasswordField";
+import { FadeInView } from "../FadeInView";
 
 interface IData {
 	first_name: string;
@@ -55,7 +56,7 @@ const School = () => {
 	};
 
 	return (
-		<>
+		<FadeInView>
 			<Field
 				val={data.username}
 				onChange={(value) => setData({ ...data, username: value })}
@@ -103,7 +104,7 @@ const School = () => {
 				/>
 			</Row>
 			<Button title="Зарегистрироваться" onPress={submitHandler} />
-		</>
+		</FadeInView>
 	);
 };
 

@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import PhoneNumberField from "../ui/PhoneNumberField";
 import { isValidNumber } from "react-native-phone-number-input";
 import PasswordField from "../ui/PasswordField";
+import { FadeInView } from "../FadeInView";
 
 interface ICompany {
 	first_name: string;
@@ -60,7 +61,7 @@ const Company: FC = () => {
 		}
 	};
 	return (
-		<>
+		<FadeInView>
 			<Field
 				val={data.username}
 				onChange={(value) => setData({ ...data, username: value })}
@@ -114,7 +115,7 @@ const Company: FC = () => {
 				/>
 			</Row>
 			<Button title="Зарегистрироваться" onPress={submitHandler} />
-		</>
+		</FadeInView>
 	);
 };
 

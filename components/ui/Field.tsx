@@ -75,7 +75,7 @@ const Field: FC<IField> = ({
 				color: Colors[colorscheme].text,
 				borderRadius: 10,
 				borderWidth: 2,
-				fontSize: isSmallDevice ? 11 : 13,
+				fontSize: isSmallDevice ? 9 : 11,
 			}}
 			placeholder={placeholder}
 			placeholderTextColor={Colors[colorscheme].placeholderColor}

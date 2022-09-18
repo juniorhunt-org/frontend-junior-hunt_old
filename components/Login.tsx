@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import Field from "./ui/Field";
 import { useAsyncStorage } from "../hooks/useAsyncStorage";
 import PasswordField from "./ui/PasswordField";
+import { FadeInView } from "./FadeInView";
 
 interface IData {
 	username: string;
@@ -25,7 +26,7 @@ const Login = () => {
 	};
 
 	return (
-		<>
+		<FadeInView>
 			<Field
 				onChange={(val) => setData({ ...data, username: val })}
 				val={data.username}
@@ -39,7 +40,7 @@ const Login = () => {
 				placeholder="Введите пароль"
 			/>
 			<Button title="Войти" onPress={loginHandler} />
-		</>
+		</FadeInView>
 	);
 };
 

@@ -56,7 +56,12 @@ const PasswordField: FC<IField> = ({
 			<FontAwesome
 				name={secure ? "eye" : "eye-slash"}
 				size={isSmallDevice ? 20 : 25}
-				style={{ position: "absolute", left: "90%", bottom: "30%" }}
+				style={{
+					position: "absolute",
+					left: "96%",
+					bottom: "30%",
+					color: Colors[colorscheme].text,
+				}}
 				onPress={() => setSecure(!secure)}
 			/>
 		</View>
