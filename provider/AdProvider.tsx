@@ -18,7 +18,7 @@ import {
 interface IContext {
 	ad: IAd;
 	setAd: (ad: IAd) => void;
-	requestAd: () => void;
+	requestAd: () => Promise<void>;
 	getReplyAds: () => Promise<IAd[]>;
 	createAd: (ad: ICreateAd) => Promise<IAd>;
 	deleteReplyAd: (ad_id: number) => void;

@@ -43,6 +43,7 @@ interface IField {
 		| "newPassword"
 		| "oneTimeCode";
 	multiline?: boolean;
+	autoCapitalize?: boolean;
 }
 
 const Field: FC<IField> = ({
@@ -54,6 +55,7 @@ const Field: FC<IField> = ({
 	width = 100,
 	contentType,
 	multiline = false,
+	autoCapitalize = false,
 }) => {
 	const colorscheme = useColorScheme();
 	const { isSmallDevice } = Layout;
@@ -65,11 +67,6 @@ const Field: FC<IField> = ({
 				padding: isSmallDevice ? 5 : 10,
 				borderColor: Colors[colorscheme].tint,
 				width: `${width}%`,
-				shadowColor: "#000",
-				shadowOffset: { width: 0, height: 2 },
-				shadowOpacity: 0.25,
-				shadowRadius: 3.84,
-				elevation: 5,
 				height: multiline ? 100 : "auto",
 				backgroundColor: Colors[colorscheme].background,
 				color: Colors[colorscheme].text,
@@ -83,7 +80,7 @@ const Field: FC<IField> = ({
 			value={val}
 			multiline={multiline}
 			secureTextEntry={isSecure}
-			autoCapitalize="sentences"
+			autoCapitalize={autoCapitalize ? "sentences" : "none"}
 			keyboardType={keyboardType}
 			textContentType={contentType}
 		/>

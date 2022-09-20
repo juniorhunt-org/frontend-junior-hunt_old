@@ -1,8 +1,8 @@
 {
 	"expo": {
-		"name": "junior-hunt",
+		"name": "Junior Hunt",
 		"slug": "junior-hunt",
-		"version": "1.0.0",
+		"version": "1.0.1",
 		"orientation": "portrait",
 		"icon": "./assets/images/logo.png",
 		"scheme": "myapp",
@@ -23,10 +23,9 @@
 		"android": {
 			"versionCode": 1,
 			"softwareKeyboardLayoutMode": "pan",
-			"googleServicesFile": "./google-services.json",
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/images/logo.png",
-				"backgroundColor": "#ffffff"
+				"backgroundColor": "#000000"
 			},
 			"package": "com.ivaneev.ivan.juniorhunt"
 		},

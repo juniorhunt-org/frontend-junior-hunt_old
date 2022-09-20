@@ -56,7 +56,6 @@ const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
 		registerForPushNotificationsAsync().then(
 			(token) => token && setExpoPushToken(token)
 		);
-		console.log(expoPushToken);
 		notificationListener.current =
 			Notifications.addNotificationReceivedListener((notification) => {
 				setNotification(notification !== undefined);
@@ -80,15 +79,17 @@ const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
 		title: string,
 		body: string
 	) => {
-		const { token } = await getDetailNotificationTokenByUserId(user_id);
-		const message = {
-			to: token,
-			sound: "default",
-			title,
-			body,
-			data: {},
-		};
-		await axios.post("https://exp.host/--/api/v2/push/send", message);
+		try {
+			const { token } = await getDetailNotificationTokenByUserId(user_id);
+			const message = {
+				to: token,
+				sound: "default",
+				title,
+				body,
+				data: {},
+			};
+			await axios.post("https://exp.host/--/api/v2/push/send", message);
+		} catch (err) {}
 	};
 
 	const registerForPushNotificationsAsync = async () => {

@@ -22,7 +22,7 @@ const Button: FC<IButton> = ({
 	width = 100,
 }) => {
 	const colorscheme = useColorScheme();
-	const Wrapper = styled.TouchableOpacity`
+	const Wrapper = styled.TouchableHighlight`
 		width: ${width}%;
 		padding: ${Layout.isSmallDevice ? 10 : 15}px;
 		border-radius: 10px;
@@ -33,7 +33,6 @@ const Button: FC<IButton> = ({
 			: Colors[colorscheme].tint};
 		margin-top: 10px;
 		margin-bottom: 10px;
-		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 		${!active ? `border: 2px solid ` + Colors[colorscheme].tint : ""}
 	`;
 	const Title = styled.Text`

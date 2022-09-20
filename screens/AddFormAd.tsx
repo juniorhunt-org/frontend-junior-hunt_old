@@ -3,6 +3,7 @@ import { Picker } from "@react-native-picker/picker";
 import React, { FC, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { TimePicker, ValueMap } from "react-native-simple-time-picker";
+import { FadeInView } from "../components/FadeInView";
 import Layout from "../components/layout/Layout";
 import Button from "../components/ui/Button";
 import Field from "../components/ui/Field";
@@ -61,100 +62,104 @@ const AddFormAd: FC<RootTabScreenProps<"AddForm">> = ({ navigation }) => {
 
 	return (
 		<Layout>
-			<KeyboardAvoidingView
-				keyboardVerticalOffset={Platform.select({ ios: 100, android: 100 })}
-				style={{ flex: 1 }}
-				behavior="padding"
-			>
-				<ScrollView>
-					<Field
-						placeholder="Введите заголовок объявления"
-						val={data.title}
-						onChange={(value) => setData({ ...data, title: value })}
-					/>
-					<Field
-						placeholder="Введите описание объявления"
-						val={data.description}
-						multiline={true}
-						onChange={(value) => setData({ ...data, description: value })}
-					/>
-					<Field
-						placeholder="Введите цену за час"
-						val={data.payment ? String(data.payment) : ""}
-						keyboardType="number-pad"
-						onChange={(value) => setData({ ...data, payment: Number(value) })}
-					/>
-					<Field
-						placeholder="Введите количество искомых работников"
-						val={data.limit ? String(data.limit) : ""}
-						keyboardType="number-pad"
-						onChange={(value) => setData({ ...data, limit: Number(value) })}
-					/>
-					<Field
-						placeholder="Введите адрес"
-						val={data.address}
-						contentType="fullStreetAddress"
-						onChange={(value) => setData({ ...data, address: value })}
-					/>
-					<Label>Время начала</Label>
-					<TimePicker
-						value={start}
-						onChange={(value) => setStart(value)}
-						mode="dialog"
-						zeroPadding={true}
-						style={{
-							width: 200,
-							color: Colors[colorscheme].text,
-							height: 50,
-						}}
-						itemStyle={{
-							height: 50,
-							color: Colors[colorscheme].text,
-						}}
-					/>
-					<Label>Время окончания</Label>
-					<TimePicker
-						value={stop}
-						onChange={(value) => setStop(value)}
-						mode="dialog"
-						itemStyle={{
-							height: 50,
-							color: Colors[colorscheme].text,
-						}}
-						zeroPadding={true}
-						style={{
-							color: Colors[colorscheme].text,
-							width: 200,
-							height: 50,
-						}}
-					/>
-					<Label>День недели</Label>
-					<Picker
-						selectedValue={weekDay}
-						mode="dialog"
-						style={{
-							width: "100%",
-							color: Colors[colorscheme].text,
-							height: 50,
-							justifyContent: "center",
-						}}
-						itemStyle={{
-							height: 50,
-							color: Colors[colorscheme].text,
-						}}
-						onValueChange={(value) => setWeekDay(value)}
-					>
-						<Picker.Item label="Понедельник" value={0} />
-						<Picker.Item label="Вторник" value={1} />
-						<Picker.Item label="Среда" value={2} />
-						<Picker.Item label="Четверг" value={3} />
-						<Picker.Item label="Пятница" value={4} />
-						<Picker.Item label="Суббота" value={5} />
-						<Picker.Item label="Воскресенье" value={6} />
-					</Picker>
-					<Button title="Создать объявление" onPress={createHandler} />
-				</ScrollView>
-			</KeyboardAvoidingView>
+			<FadeInView>
+				<KeyboardAvoidingView
+					keyboardVerticalOffset={Platform.select({ ios: 100, android: 100 })}
+					style={{ flex: 1 }}
+					behavior="padding"
+				>
+					<ScrollView>
+						<Field
+							autoCapitalize={true}
+							placeholder="Введите заголовок объявления"
+							val={data.title}
+							onChange={(value) => setData({ ...data, title: value })}
+						/>
+						<Field
+							autoCapitalize={true}
+							placeholder="Введите описание объявления"
+							val={data.description}
+							multiline={true}
+							onChange={(value) => setData({ ...data, description: value })}
+						/>
+						<Field
+							placeholder="Введите цену за час"
+							val={data.payment ? String(data.payment) : ""}
+							keyboardType="number-pad"
+							onChange={(value) => setData({ ...data, payment: Number(value) })}
+						/>
+						<Field
+							placeholder="Введите количество искомых работников"
+							val={data.limit ? String(data.limit) : ""}
+							keyboardType="number-pad"
+							onChange={(value) => setData({ ...data, limit: Number(value) })}
+						/>
+						<Field
+							placeholder="Введите адрес"
+							val={data.address}
+							contentType="fullStreetAddress"
+							onChange={(value) => setData({ ...data, address: value })}
+						/>
+						<Label>Время начала</Label>
+						<TimePicker
+							value={start}
+							onChange={(value) => setStart(value)}
+							mode="dialog"
+							zeroPadding={true}
+							style={{
+								width: 200,
+								color: Colors[colorscheme].text,
+								height: 50,
+							}}
+							itemStyle={{
+								height: 50,
+								color: Colors[colorscheme].text,
+							}}
+						/>
+						<Label>Время окончания</Label>
+						<TimePicker
+							value={stop}
+							onChange={(value) => setStop(value)}
+							mode="dialog"
+							itemStyle={{
+								height: 50,
+								color: Colors[colorscheme].text,
+							}}
+							zeroPadding={true}
+							style={{
+								color: Colors[colorscheme].text,
+								width: 200,
+								height: 50,
+							}}
+						/>
+						<Label>День недели</Label>
+						<Picker
+							selectedValue={weekDay}
+							mode="dialog"
+							style={{
+								width: "100%",
+								color: Colors[colorscheme].text,
+								height: 50,
+								justifyContent: "center",
+							}}
+							itemStyle={{
+								height: 50,
+								color: Colors[colorscheme].text,
+							}}
+							onValueChange={(value) => setWeekDay(value)}
+						>
+							<Picker.Item label="Понедельник" value={0} />
+							<Picker.Item label="Вторник" value={1} />
+							<Picker.Item label="Среда" value={2} />
+							<Picker.Item label="Четверг" value={3} />
+							<Picker.Item label="Пятница" value={4} />
+							<Picker.Item label="Суббота" value={5} />
+							<Picker.Item label="Воскресенье" value={6} />
+						</Picker>
+						<Button title="Создать объявление" onPress={createHandler} />
+					</ScrollView>
+				</KeyboardAvoidingView>
+			</FadeInView>
 		</Layout>
 	);
 };

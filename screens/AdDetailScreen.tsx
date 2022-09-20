@@ -1,16 +1,10 @@
-import { StatusBar } from "expo-status-bar";
 import React, { FC, useEffect, useState } from "react";
-import { Alert, Platform } from "react-native";
+import { Alert } from "react-native";
 import styled from "styled-components/native";
 import useColorScheme from "../hooks/useColorScheme";
 
 import { useAd } from "../hooks/useAd";
-import {
-	NumberToWeekDay,
-	RootStackScreenProps,
-	RootTabScreenProps,
-	Schedule,
-} from "../types";
+import { NumberToWeekDay, RootTabScreenProps, Schedule } from "../types";
 import Colors from "../constants/Colors";
 import Layout from "../components/layout/Layout";
 import { FontAwesome } from "@expo/vector-icons";
@@ -19,7 +13,7 @@ import { useAuth } from "../hooks/useAuth";
 import UserCard from "../components/ui/UserCard";
 import { useNotification } from "../hooks/useNotification";
 
-export const AddDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
+export const AdDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 	navigation,
 }) => {
 	const { ad, requestAd, getSchedule, deleteAd } = useAd();
@@ -72,7 +66,7 @@ export const AddDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 	`;
 
 	const submitHandler = async () => {
-		requestAd();
+		await requestAd();
 		Alert.alert("Вы успешко откликнулись на объявления");
 		await sendPushNotification(
 			ad.owner,
@@ -81,6 +75,18 @@ export const AddDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 		);
 		navigation.goBack();
 	};
+
+	const mainButton = user.detailInfo.is_company ? (
+		<Button
+			title="Удалить"
+			danger={true}
+			onPress={() => {
+				deleteAd(ad.id);
+			}}
+		/>
+	) : (
+		<Button title="Откликнуться" onPress={submitHandler} />
+	);
 
 	return (
 		<Layout>
@@ -107,26 +113,7 @@ export const AddDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 					user_id={ad.owner}
 					showAd={false}
 				/>
-				{user.detailInfo.is_company ? (
-					ad.owner == user.detailInfo.id ? (
-						<Button
-							title="Удалить"
-							danger={true}
-							onPress={() => {
-								deleteAd(ad.id);
-								navigation.navigate("Search");
-							}}
-						/>
-					) : (
-						<Button
-							title="Вы не можете откликаться на вакансии"
-							onPress={() => {}}
-							active={false}
-						/>
-					)
-				) : (
-					<Button title="Откликнуться" onPress={submitHandler} />
-				)}
+				{mainButton}
 			</Wrapper>
 		</Layout>
 	);

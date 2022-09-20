@@ -23,7 +23,7 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import Auth from "../screens/Auth";
-import { AddDetailScreen } from "../screens/ModalScreen";
+import { AdDetailScreen } from "../screens/AdDetailScreen";
 import AddFormAd from "../screens/AddFormAd";
 import Loader from "../components/Loader";
 
@@ -77,7 +77,7 @@ function RootNavigator() {
 				<Stack.Screen
 					options={{ title: "Объявление" }}
 					name="AdDetail"
-					component={AddDetailScreen}
+					component={AdDetailScreen}
 				/>
 			</Stack.Group>
 		</Stack.Navigator>

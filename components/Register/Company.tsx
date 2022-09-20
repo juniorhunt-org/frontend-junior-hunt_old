@@ -89,12 +89,14 @@ const Company: FC = () => {
 			<Row>
 				<Field
 					width={49}
+					autoCapitalize={true}
 					val={data.first_name}
 					onChange={(value) => setData({ ...data, first_name: value })}
 					placeholder="Введите имя"
 				/>
 				<Field
 					width={49}
+					autoCapitalize={true}
 					val={data.last_name}
 					onChange={(value) => setData({ ...data, last_name: value })}
 					placeholder="Введите фамилию"
