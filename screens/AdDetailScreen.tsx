@@ -30,7 +30,7 @@ export const AdDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 
 	useEffect(() => {
 		getScheduleHandler();
-	}, []);
+	}, [ad]);
 
 	const Title = styled.Text`
 		font-weight: 500;
@@ -107,14 +107,10 @@ export const AdDetailScreen: FC<RootTabScreenProps<"AdDetail">> = ({
 						{NumberToWeekDay[schedule.week_day]}
 					</Price>
 				)}
-				<UserCard
-					ad={ad}
-					navigation={navigation}
-					user_id={ad.owner}
-					showAd={false}
-				/>
+
 				{mainButton}
 			</Wrapper>
+			<UserCard ad={ad} navigation={navigation} user_id={ad.owner} />
 		</Layout>
 	);
 };

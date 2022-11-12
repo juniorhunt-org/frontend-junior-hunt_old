@@ -30,18 +30,12 @@ const PasswordField: FC<IField> = ({
 				marginTop: 10,
 				padding: isSmallDevice ? 5 : 10,
 				borderColor: Colors[colorscheme].tint,
-				shadowColor: "#000",
-				shadowOffset: { width: 0, height: 2 },
-				shadowOpacity: 0.25,
-				shadowRadius: 3.84,
-				elevation: 5,
 				backgroundColor: Colors[colorscheme].background,
 				borderRadius: 10,
 				borderWidth: 2,
 			}}
 		>
 			<TextInput
-				blurOnSubmit={true}
 				secureTextEntry={secure}
 				style={{
 					width: "100%",
@@ -58,9 +52,9 @@ const PasswordField: FC<IField> = ({
 				size={isSmallDevice ? 20 : 25}
 				style={{
 					position: "absolute",
-					left: "96%",
+					left: "95%",
 					bottom: "30%",
-					color: Colors[colorscheme].text,
+					color: Colors[colorscheme].tint,
 				}}
 				onPress={() => setSecure(!secure)}
 			/>

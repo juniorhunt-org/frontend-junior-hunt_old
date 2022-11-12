@@ -23,7 +23,7 @@ const PhoneNumberField: FC<IPhoneNumberField> = ({
 		<PhoneInput
 			placeholder="Введите номер телефона"
 			textInputStyle={{
-				fontSize: isSmallDevice ? 9 : 11,
+				fontSize: isSmallDevice ? 10 : 13,
 				height: 100,
 				color: Colors[colorscheme].text,
 			}}

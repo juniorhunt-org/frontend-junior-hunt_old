@@ -67,12 +67,12 @@ const Field: FC<IField> = ({
 				padding: isSmallDevice ? 5 : 10,
 				borderColor: Colors[colorscheme].tint,
 				width: `${width}%`,
-				height: multiline ? 100 : "auto",
+				height: multiline ? 70 : "auto",
 				backgroundColor: Colors[colorscheme].background,
 				color: Colors[colorscheme].text,
 				borderRadius: 10,
 				borderWidth: 2,
-				fontSize: isSmallDevice ? 9 : 11,
+				fontSize: isSmallDevice ? 9 : 12,
 			}}
 			placeholder={placeholder}
 			placeholderTextColor={Colors[colorscheme].placeholderColor}

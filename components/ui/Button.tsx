@@ -25,7 +25,7 @@ const Button: FC<IButton> = ({
 	const Wrapper = styled.TouchableHighlight`
 		width: ${width}%;
 		padding: ${Layout.isSmallDevice ? 10 : 15}px;
-		border-radius: 10px;
+		border-radius: 7px;
 		background-color: ${danger
 			? Colors[colorscheme].dangerColor
 			: !active

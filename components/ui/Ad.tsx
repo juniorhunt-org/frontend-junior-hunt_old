@@ -37,7 +37,7 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 		margin-top: 15px;
 		padding: 10px 10px;
 		background-color: ${Colors[colorscheme].background};
-		border-radius: 10px;
+		border-radius: 7px;
 		border: 2px solid ${Colors[colorscheme].tint};
 	`;
 
@@ -59,15 +59,7 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 	`;
 
 	return (
-		<Wrapper
-			style={{
-				shadowColor: "#000",
-				shadowOffset: { width: 0, height: 2 },
-				shadowOpacity: 0.25,
-				shadowRadius: 3.84,
-				elevation: 5,
-			}}
-		>
+		<Wrapper>
 			<Title>{ad.title}</Title>
 			<Intro>
 				{ad.description.length > 47
@@ -78,7 +70,9 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 				<FontAwesome name="user" size={14} /> Количество свободных вакансий:{" "}
 				{ad.limit - ad.users.length}
 			</Intro>
-			<Price>{ad.payment} ₽ за час</Price>
+			<Price>
+				<FontAwesome name="money" size={14} /> {ad.payment} ₽ за час
+			</Price>
 			{schedule && (
 				<Price>
 					Время работы с {schedule.start} - {schedule.stop} в{" "}

@@ -5,7 +5,6 @@ import Button from "../components/ui/Button";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import Label from "../components/ui/Label";
 import Field from "../components/ui/Field";
-import styled from "styled-components/native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { FadeInView } from "../components/FadeInView";
@@ -43,13 +42,8 @@ const Account: FC = () => {
 									marginTop: 15,
 									padding: 10,
 									backgroundColor: Colors[colorscheme].background,
-									borderRadius: 10,
+									borderRadius: 7,
 									borderWidth: 2,
-									shadowColor: "#000",
-									shadowOffset: { width: 0, height: 2 },
-									shadowOpacity: 0.5,
-									shadowRadius: 3.84,
-									elevation: 5,
 									borderColor: Colors[colorscheme].tint,
 								}}
 							>

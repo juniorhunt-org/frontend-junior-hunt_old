@@ -164,6 +164,10 @@ export const getSchedule = async (
 	return data;
 };
 
+function sleep(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export const getUserInfo = async (user_id: number) => {
 	const { data } = await axios.get(
 		`http://213.139.208.189/api/v1/profile_user/${user_id}/`

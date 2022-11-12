@@ -1,5 +1,5 @@
 import { TouchableOpacity } from "react-native";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useCallback } from "react";
 import { IAd, ProfileUser } from "../../types";
 import { useAuth } from "../../hooks/useAuth";
 import useColorScheme from "../../hooks/useColorScheme";
@@ -15,27 +15,21 @@ interface IUserCard {
 	showAd?: boolean;
 }
 
-const UserCard: FC<IUserCard> = ({
-	ad,
-	user_id,
-	navigation,
-	showAd = true,
-}) => {
+const UserCard: FC<IUserCard> = ({ ad, user_id, navigation }) => {
 	const [profile, setProfile] = useState<ProfileUser>({} as ProfileUser);
 	const colorscheme = useColorScheme();
 	const { getUserInfo } = useAuth();
 	const { setAd } = useAd();
 
-	const getInfo = async () => {
+	const getInfo = useCallback(async () => {
 		setProfile(await getUserInfo(user_id));
-	};
+	}, [user_id]);
 
 	const Wrapper = styled.View`
 		margin-top: 15px;
 		padding: 10px 10px;
 		background-color: ${Colors[colorscheme].background};
 		border-radius: 10px;
-		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 		border: 2px solid ${Colors[colorscheme].tint};
 	`;
 
