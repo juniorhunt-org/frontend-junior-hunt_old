@@ -91,27 +91,27 @@ function BottomTabNavigator() {
 	const { user } = useAuth();
 	return (
 		<BottomTab.Navigator
-			initialRouteName="Home"
+			initialRouteName="Search"
 			screenOptions={{
 				tabBarActiveTintColor: Colors[colorScheme].tint,
 				unmountOnBlur: true,
 			}}
 		>
 			<BottomTab.Screen
-				name="Home"
-				component={Home}
-				options={({ navigation }: RootTabScreenProps<"Home">) => ({
-					title: "Главная",
-					tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-				})}
-			/>
-			<BottomTab.Screen
 				name="Search"
 				component={Search}
 				options={{
-					title: "Объявления",
-					tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+					title: "Поиск",
+					tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
 				}}
+			/>
+			<BottomTab.Screen
+				name="Home"
+				component={Home}
+				options={({ navigation }: RootTabScreenProps<"Home">) => ({
+					title: "Отклики",
+					tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+				})}
 			/>
 			{user.detailInfo.is_company && (
 				<BottomTab.Screen

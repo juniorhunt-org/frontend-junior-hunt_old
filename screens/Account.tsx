@@ -2,7 +2,13 @@ import React, { FC, useState } from "react";
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../hooks/useAuth";
 import Button from "../components/ui/Button";
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import {
+	Alert,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
+	View,
+} from "react-native";
 import Label from "../components/ui/Label";
 import Field from "../components/ui/Field";
 import Colors from "../constants/Colors";
@@ -78,10 +84,22 @@ const Account: FC = () => {
 			)}
 			<View>
 				<Button
+					danger={true}
 					title="Выйти"
 					onPress={() => {
-						deleteNotificationTokenFromDb(user.detailInfo.id, user.token);
-						logout();
+						Alert.alert("Вы уверены, что хотите выйти?", "", [
+							{
+								text: "Да",
+								onPress: () => {
+									deleteNotificationTokenFromDb(user.detailInfo.id, user.token);
+									logout();
+								},
+							},
+							{
+								text: "Нет",
+								onPress: () => {},
+							},
+						]);
 					}}
 				/>
 			</View>
