@@ -1,37 +1,35 @@
-import { FontAwesome } from "@expo/vector-icons";
-import React, { FC, useEffect, useState } from "react";
-import { IAd, NumberToWeekDay, Schedule } from "../../types";
-import styled from "styled-components/native";
-import useColorScheme from "../../hooks/useColorScheme";
-import Colors from "../../constants/Colors";
-import Button from "./Button";
-import { useAd } from "../../hooks/useAd";
-import { useAuth } from "../../hooks/useAuth";
+import { FontAwesome } from '@expo/vector-icons'
+import React, { FC, useEffect, useState } from 'react'
+import { IAd, NumberToWeekDay, Schedule } from '../../types'
+import styled from 'styled-components/native'
+import useColorScheme from '../../hooks/useColorScheme'
+import Colors from '../../constants/Colors'
+import Button from './Button'
+import { useAd } from '../../hooks/useAd'
+import { useAuth } from '../../hooks/useAuth'
 
 interface IAdProps {
-	ad: IAd;
-	navigator: any;
+	ad: IAd
+	navigator: any
 }
 
 const Ad: FC<IAdProps> = ({ ad, navigator }) => {
-	const colorscheme: "light" | "dark" = useColorScheme();
-	const { setAd, deleteReplyAd, getSchedule } = useAd();
-	const { user } = useAuth();
-	const [schedule, setSchedule] = useState<Schedule>({} as Schedule);
+	const colorscheme: 'light' | 'dark' = useColorScheme()
+	const { setAd, deleteReplyAd, getSchedule } = useAd()
+	const { user } = useAuth()
+	const [schedule, setSchedule] = useState<Schedule>({} as Schedule)
 	const getScheduleHandler = async () => {
-		setSchedule(await getSchedule(ad));
-		console.log(schedule);
-	};
+		setSchedule(await getSchedule(ad))
+	}
 
 	useEffect(() => {
-		getScheduleHandler();
-		console.log(ad.users, user.detailInfo);
-	}, []);
+		getScheduleHandler()
+	}, [])
 
 	const detailAd = () => {
-		setAd(ad);
-		navigator.navigate("AdDetail");
-	};
+		setAd(ad)
+		navigator.navigate('AdDetail')
+	}
 
 	const Wrapper = styled.View`
 		margin-top: 15px;
@@ -39,35 +37,35 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 		background-color: ${Colors[colorscheme].background};
 		border-radius: 7px;
 		border: 2px solid ${Colors[colorscheme].tint};
-	`;
+	`
 
 	const Title = styled.Text`
 		color: ${Colors[colorscheme].text};
 		font-weight: 500;
 		font-size: 16px;
-	`;
+	`
 
 	const Intro = styled.Text`
 		color: #898989;
 		margin-top: 10px;
-	`;
+	`
 
 	const Price = styled.Text`
 		color: ${Colors[colorscheme].tint};
 		font-weight: 500;
 		margin-top: 10px;
-	`;
+	`
 
 	return (
 		<Wrapper>
 			<Title>{ad.title}</Title>
 			<Intro>
 				{ad.description.length > 47
-					? ad.description.substring(0, 47) + "..."
+					? ad.description.substring(0, 47) + '...'
 					: ad.description}
 			</Intro>
 			<Intro>
-				<FontAwesome name="user" size={14} /> Количество свободных вакансий:{" "}
+				<FontAwesome name="user" size={14} /> Количество свободных вакансий:{' '}
 				{ad.limit - ad.users.length}
 			</Intro>
 			<Price>
@@ -75,7 +73,7 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 			</Price>
 			{schedule && (
 				<Price>
-					Время работы с {schedule.start} - {schedule.stop} в{" "}
+					Время работы с {schedule.start} - {schedule.stop} в{' '}
 					{NumberToWeekDay[schedule.week_day]}
 				</Price>
 			)}
@@ -94,7 +92,7 @@ const Ad: FC<IAdProps> = ({ ad, navigator }) => {
 				<Button title="Подробнее" onPress={detailAd} />
 			)}
 		</Wrapper>
-	);
-};
+	)
+}
 
-export default Ad;
+export default Ad

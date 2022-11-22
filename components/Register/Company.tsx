@@ -1,42 +1,38 @@
-import React, { FC, useEffect, useState } from "react";
-import { useAsyncStorage } from "../../hooks/useAsyncStorage";
-import Field from "../ui/Field";
-import Row from "../ui/Row";
-import Button from "../ui/Button";
-import { Alert } from "react-native";
-import { useAuth } from "../../hooks/useAuth";
-import PhoneNumberField from "../ui/PhoneNumberField";
-import { isValidNumber } from "react-native-phone-number-input";
-import PasswordField from "../ui/PasswordField";
-import { FadeInView } from "../FadeInView";
+import React, { FC, useState } from 'react'
+import { useAsyncStorage } from '../../hooks/useAsyncStorage'
+import Field from '../ui/Field'
+import Row from '../ui/Row'
+import Button from '../ui/Button'
+import { Alert } from 'react-native'
+import { useAuth } from '../../hooks/useAuth'
+import PhoneNumberField from '../ui/PhoneNumberField'
+import { isValidNumber } from 'react-native-phone-number-input'
+import PasswordField from '../ui/PasswordField'
+import { FadeInView } from '../FadeInView'
 
 interface ICompany {
-	first_name: string;
-	last_name: string;
-	password: string;
-	second_password: string;
-	username: string;
-	email: string;
-	phone: string;
-	company_name: string;
+	first_name: string
+	last_name: string
+	password: string
+	second_password: string
+	username: string
+	email: string
+	phone: string
+	company_name: string
 }
 
 const Company: FC = () => {
-	const [data, setData] = useState<ICompany>({} as ICompany);
-	const [value, setValue] = useState("");
-	const [formattedValue, setFormattedValue] = useState("");
+	const [data, setData] = useState<ICompany>({} as ICompany)
+	const [value, setValue] = useState('')
+	const [formattedValue, setFormattedValue] = useState('')
 
-	useEffect(() => {
-		console.log(value, formattedValue);
-	}, [value]);
+	const { register } = useAuth()
 
-	const { register } = useAuth();
-
-	useAsyncStorage("company_registration_form", setData, data);
+	useAsyncStorage('company_registration_form', setData, data)
 
 	const submitHandler = async () => {
-		if (isValidNumber(formattedValue, "RU")) {
-			data.phone = formattedValue;
+		if (isValidNumber(formattedValue, 'RU')) {
+			data.phone = formattedValue
 			if (
 				data.password &&
 				data.second_password &&
@@ -52,14 +48,14 @@ const Company: FC = () => {
 					data.first_name,
 					data.last_name,
 					data.company_name
-				);
+				)
 			} else {
-				Alert.alert("Ошибка регистрации", "Все поля обязательные");
+				Alert.alert('Ошибка регистрации', 'Все поля обязательные')
 			}
 		} else {
-			Alert.alert("Ошибка регистрации", "Введен некорректный номер телефона");
+			Alert.alert('Ошибка регистрации', 'Введен некорректный номер телефона')
 		}
-	};
+	}
 	return (
 		<FadeInView>
 			<Field
@@ -118,7 +114,7 @@ const Company: FC = () => {
 			</Row>
 			<Button title="Зарегистрироваться" onPress={submitHandler} />
 		</FadeInView>
-	);
-};
+	)
+}
 
-export default Company;
+export default Company

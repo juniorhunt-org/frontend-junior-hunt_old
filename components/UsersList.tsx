@@ -1,28 +1,26 @@
-import { View, Text, FlatList, RefreshControl } from "react-native";
-import React, { FC, useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth";
-import { IAd, ProfileUser } from "../types";
-import { getMyAds } from "../provider/api";
-import UserCard from "./ui/UserCard";
-import { FadeInView } from "./FadeInView";
-import Label from "./ui/Label";
+import { FlatList, RefreshControl } from 'react-native'
+import React, { FC, useEffect, useState } from 'react'
+import { useAuth } from '../hooks/useAuth'
+import { IAd } from '../types'
+import { getMyAds } from '../provider/api'
+import UserCard from './ui/UserCard'
+import { FadeInView } from './FadeInView'
 
 const UsersList: FC<{ navigation: any }> = ({ navigation }) => {
-	const { user, isLoading, setIsLoading, getUserInfo } = useAuth();
-	const [myAds, setMyAds] = useState<IAd[]>([]);
+	const { user, isLoading, setIsLoading } = useAuth()
+	const [myAds, setMyAds] = useState<IAd[]>([])
 
 	const getData = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		if (user.detailInfo.id) {
-			console.log(await getMyAds(user.token, user.detailInfo.id));
-			setMyAds(await getMyAds(user.token, user.detailInfo.id));
+			setMyAds(await getMyAds(user.token, user.detailInfo.id))
 		}
-		setIsLoading(false);
-	};
+		setIsLoading(false)
+	}
 
 	useEffect(() => {
-		getData();
-	}, []);
+		getData()
+	}, [])
 
 	return (
 		<FadeInView>
@@ -42,7 +40,7 @@ const UsersList: FC<{ navigation: any }> = ({ navigation }) => {
 				keyExtractor={(item) => `user ${item.id}`}
 			/>
 		</FadeInView>
-	);
-};
+	)
+}
 
-export default UsersList;
+export default UsersList
