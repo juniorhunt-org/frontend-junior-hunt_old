@@ -73,7 +73,7 @@ const Field: FC<IField> = ({
         fontSize: isSmallDevice ? 9 : 12,
       }}
       placeholder={placeholder}
-      placeholderTextColor={colors.primary}
+      placeholderTextColor={colors.text}
       onChangeText={onChange}
       value={val}
       multiline={multiline}
