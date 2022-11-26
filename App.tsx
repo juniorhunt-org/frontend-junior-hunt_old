@@ -6,8 +6,8 @@ import {AdProvider} from './provider/AdProvider'
 import {AuthProvider} from './provider/AuthProvider'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import React from 'react'
-import NotificationProvider from './provider/NotificationProvider'
 import {StatusBar} from 'expo-status-bar'
+import NotificationProvider from "./provider/NotificationProvider";
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
@@ -25,8 +25,8 @@ export default function App() {
               <Navigation colorScheme={colorScheme}/>
             </SafeAreaProvider>
           </AdProvider>
+          <StatusBar style="auto"/>
         </NotificationProvider>
-        <StatusBar style="auto"/>
       </AuthProvider>
     )
   }
