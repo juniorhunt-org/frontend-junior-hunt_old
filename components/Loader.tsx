@@ -1,25 +1,24 @@
 import {ActivityIndicator} from "react-native";
 import React from "react";
 import styled from "styled-components/native";
-import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
+import {useTheme} from "@react-navigation/native";
 
 const Loader = () => {
-  const colorscheme = useColorScheme();
+  const {colors} = useTheme()
 
   const Wrapper = styled.View`
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-		width: 100%;
-	`;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  `;
 
   const Title = styled.Text`
-		color: ${Colors[colorscheme].text};
-		font-size: 30px;
-		font-weight: bold;
-		margin-bottom: 20px;
-	`;
+    color: ${colors.text};
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  `;
 
   return (
     <Wrapper>

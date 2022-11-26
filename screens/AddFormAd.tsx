@@ -8,11 +8,10 @@ import Layout from "../components/layout/Layout";
 import Button from "../components/ui/Button";
 import Field from "../components/ui/Field";
 import Label from "../components/ui/Label";
-import Colors from "../constants/Colors";
 import {useAd} from "../hooks/useAd";
 import {useAsyncStorage} from "../hooks/useAsyncStorage";
-import useColorScheme from "../hooks/useColorScheme";
 import {RootTabScreenProps} from "../types";
+import {useTheme} from "@react-navigation/native";
 
 export interface ICreateAd {
   title: string;
@@ -36,8 +35,9 @@ const AddFormAd: FC<RootTabScreenProps<"AddForm">> = ({navigation}) => {
   });
   const [weekDay, setWeekDay] = useState<number>(1);
   const {createAd, setAd, createSchedule} = useAd();
-  const colorscheme = useColorScheme();
+  const {colors} = useTheme()
   useAsyncStorage("create_ad_form", setData, data);
+
 
   const createHandler = async () => {
     const ad = await createAd(data);
@@ -108,12 +108,12 @@ const AddFormAd: FC<RootTabScreenProps<"AddForm">> = ({navigation}) => {
               zeroPadding={true}
               style={{
                 width: 200,
-                color: Colors[colorscheme].text,
+                color: colors.text,
                 height: 50,
               }}
               itemStyle={{
                 height: 50,
-                color: Colors[colorscheme].text,
+                color: colors.text,
               }}
             />
             <Label>Время окончания</Label>
@@ -123,11 +123,11 @@ const AddFormAd: FC<RootTabScreenProps<"AddForm">> = ({navigation}) => {
               mode="dialog"
               itemStyle={{
                 height: 50,
-                color: Colors[colorscheme].text,
+                color: colors.text,
               }}
               zeroPadding={true}
               style={{
-                color: Colors[colorscheme].text,
+                color: colors.text,
                 width: 200,
                 height: 50,
               }}
@@ -138,13 +138,13 @@ const AddFormAd: FC<RootTabScreenProps<"AddForm">> = ({navigation}) => {
               mode="dialog"
               style={{
                 width: "100%",
-                color: Colors[colorscheme].text,
+                color: colors.text,
                 height: 50,
                 justifyContent: "center",
               }}
               itemStyle={{
                 height: 50,
-                color: Colors[colorscheme].text,
+                color: colors.text,
               }}
               onValueChange={(value) => setWeekDay(value)}
             >

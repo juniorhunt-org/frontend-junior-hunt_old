@@ -2,11 +2,10 @@ import {FontAwesome} from '@expo/vector-icons'
 import React, {FC, useEffect, useState} from 'react'
 import {IAd, NumberToWeekDay, Schedule} from '../../types'
 import styled from 'styled-components/native'
-import useColorScheme from '../../hooks/useColorScheme'
-import Colors from '../../constants/Colors'
 import Button from './Button'
 import {useAd} from '../../hooks/useAd'
 import {useAuth} from '../../hooks/useAuth'
+import {useTheme} from "@react-navigation/native";
 
 interface IAdProps {
   ad: IAd
@@ -14,7 +13,7 @@ interface IAdProps {
 }
 
 const Ad: FC<IAdProps> = ({ad, navigator}) => {
-  const colorscheme: 'light' | 'dark' = useColorScheme()
+  const {colors} = useTheme()
   const {setAd, deleteReplyAd, getSchedule} = useAd()
   const {user} = useAuth()
   const [schedule, setSchedule] = useState<Schedule>({} as Schedule)
@@ -34,13 +33,13 @@ const Ad: FC<IAdProps> = ({ad, navigator}) => {
   const Wrapper = styled.View`
     margin-top: 15px;
     padding: 10px 10px;
-    background-color: ${Colors[colorscheme].background};
+    background-color: ${colors.background};
     border-radius: 7px;
-    border: 2px solid ${Colors[colorscheme].tint};
+    border: 2px solid ${colors.primary};
   `
 
   const Title = styled.Text`
-    color: ${Colors[colorscheme].text};
+    color: ${colors.text};
     font-weight: 500;
     font-size: 16px;
   `
@@ -51,7 +50,7 @@ const Ad: FC<IAdProps> = ({ad, navigator}) => {
   `
 
   const Price = styled.Text`
-    color: ${Colors[colorscheme].tint};
+    color: ${colors.primary};
     font-weight: 500;
     margin-top: 10px;
   `

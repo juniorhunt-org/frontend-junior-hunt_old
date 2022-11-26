@@ -1,11 +1,9 @@
 import React, {FC, useEffect, useState} from 'react'
 import {Alert} from 'react-native'
 import styled from 'styled-components/native'
-import useColorScheme from '../hooks/useColorScheme'
 
 import {useAd} from '../hooks/useAd'
 import {NumberToWeekDay, RootTabScreenProps, Schedule} from '../types'
-import Colors from '../constants/Colors'
 import Layout from '../components/layout/Layout'
 import {FontAwesome} from '@expo/vector-icons'
 import Button from '../components/ui/Button'
@@ -14,12 +12,13 @@ import UserCard from '../components/ui/UserCard'
 import {useNotification} from '../hooks/useNotification'
 import {NotificationTypes} from "../constants/Notification";
 import {FadeInView} from "../components/FadeInView";
+import {useTheme} from "@react-navigation/native";
 
 export const AdDetailScreen: FC<RootTabScreenProps<'AdDetail'>> = ({
                                                                      navigation
                                                                    }) => {
   const {ad, requestAd, getSchedule, deleteAd} = useAd()
-  const colorscheme: 'light' | 'dark' = useColorScheme()
+  const {colors} = useTheme()
   const {user, setIsLoading} = useAuth()
   const [schedule, setSchedule] = useState<Schedule>({} as Schedule)
   const {sendPushNotification} = useNotification()
@@ -38,26 +37,26 @@ export const AdDetailScreen: FC<RootTabScreenProps<'AdDetail'>> = ({
     font-weight: 500;
     font-size: 20px;
     margin-top: 20px;
-    color: ${Colors[colorscheme].tint};
+    color: ${colors.text};
   `
 
   const Description = styled.Text`
     font-size: 16px;
-    color: ${Colors[colorscheme].text};
+    color: ${colors.text};
     margin-top: 10px;
   `
 
   const Wrapper = styled.View`
     margin-top: 10px;
     padding: 10px 10px;
-    background-color: ${Colors[colorscheme].background};
+    background-color: ${colors.background};
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-    border: 2px solid ${Colors[colorscheme].tint};
+    border: 2px solid ${colors.primary};
   `
 
   const Price = styled.Text`
-    color: ${Colors[colorscheme].tint};
+    color: ${colors.primary};
     font-weight: 500;
     font-size: 16px;
     margin-top: 10px;
@@ -85,6 +84,7 @@ export const AdDetailScreen: FC<RootTabScreenProps<'AdDetail'>> = ({
       danger={true}
       onPress={() => {
         deleteAd(ad.id)
+        navigation.navigate('Home')
       }}
     />
   ) : (

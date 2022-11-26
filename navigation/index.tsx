@@ -1,13 +1,12 @@
 import {FontAwesome} from '@expo/vector-icons'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native'
+import {NavigationContainer, useTheme} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import * as React from 'react'
 import {ColorSchemeName} from 'react-native'
 
-import Colors from '../constants/Colors'
+import {DarkCustomTheme, LightCustomTheme} from '../constants/Colors'
 import {useAuth} from '../hooks/useAuth'
-import useColorScheme from '../hooks/useColorScheme'
 import Account from '../screens/Account'
 import {Home} from '../screens/Home'
 import {Search} from '../screens/Search'
@@ -26,7 +25,7 @@ export default function Navigation({
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      theme={colorScheme === 'dark' ? DarkCustomTheme : LightCustomTheme}
     >
       <RootNavigator/>
     </NavigationContainer>
@@ -78,14 +77,22 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>()
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme()
   const {user} = useAuth()
+  const {colors} = useTheme();
+
   return (
     <BottomTab.Navigator
       initialRouteName="Search"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        unmountOnBlur: true
+        tabBarActiveTintColor: colors.primary,
+        unmountOnBlur: true,
+        headerShadowVisible: false,
+        headerStyle: {
+          borderBottomWidth: 0
+        },
+        tabBarStyle: {
+          borderTopWidth: 0
+        }
       }}
     >
       <BottomTab.Screen

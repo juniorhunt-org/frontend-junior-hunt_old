@@ -1,8 +1,7 @@
 import React, {FC, useRef} from "react";
 import PhoneInput from "react-native-phone-number-input";
-import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
-import useColorScheme from "../../hooks/useColorScheme";
+import {useTheme} from "@react-navigation/native";
 
 interface IPhoneNumberField {
   value: string;
@@ -15,7 +14,7 @@ const PhoneNumberField: FC<IPhoneNumberField> = ({
                                                    setFormatted,
                                                    setValue,
                                                  }) => {
-  const colorscheme = useColorScheme();
+  const {colors} = useTheme()
   const phoneInput = useRef<PhoneInput>(null);
   const {isSmallDevice} = Layout;
 
@@ -25,7 +24,7 @@ const PhoneNumberField: FC<IPhoneNumberField> = ({
       textInputStyle={{
         fontSize: isSmallDevice ? 10 : 13,
         height: 100,
-        color: Colors[colorscheme].text,
+        color: colors.text,
       }}
       ref={phoneInput}
       defaultValue={value}
@@ -34,14 +33,14 @@ const PhoneNumberField: FC<IPhoneNumberField> = ({
       layout="second"
       textContainerStyle={{
         borderRadius: 10,
-        backgroundColor: Colors[colorscheme].background,
+        backgroundColor: colors.background,
       }}
       containerStyle={{
-        backgroundColor: Colors[colorscheme].tint,
+        backgroundColor: colors.primary,
         width: "100%",
         borderWidth: 2,
         marginTop: 10,
-        borderColor: Colors[colorscheme].tint,
+        borderColor: colors.primary,
         borderRadius: 10,
         height: 50,
       }}

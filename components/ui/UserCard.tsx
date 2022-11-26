@@ -2,11 +2,10 @@ import {TouchableOpacity} from "react-native";
 import React, {FC, useCallback, useEffect, useState} from "react";
 import {IAd, ProfileUser} from "../../types";
 import {useAuth} from "../../hooks/useAuth";
-import useColorScheme from "../../hooks/useColorScheme";
 import styled from "styled-components/native";
-import Colors from "../../constants/Colors";
 import {useAd} from "../../hooks/useAd";
 import {FadeInView} from "../FadeInView";
+import {useTheme} from "@react-navigation/native";
 
 interface IUserCard {
   ad?: IAd;
@@ -17,7 +16,7 @@ interface IUserCard {
 
 const UserCard: FC<IUserCard> = ({ad, user_id, navigation}) => {
   const [profile, setProfile] = useState<ProfileUser>({} as ProfileUser);
-  const colorscheme = useColorScheme();
+  const {colors} = useTheme();
   const {getUserInfo} = useAuth();
   const {setAd} = useAd();
 
@@ -26,29 +25,29 @@ const UserCard: FC<IUserCard> = ({ad, user_id, navigation}) => {
   }, [user_id]);
 
   const Wrapper = styled.View`
-		margin-top: 15px;
-		padding: 10px 10px;
-		background-color: ${Colors[colorscheme].background};
-		border-radius: 10px;
-		border: 2px solid ${Colors[colorscheme].tint};
-	`;
+    margin-top: 15px;
+    padding: 10px 10px;
+    background-color: ${colors.background};
+    border-radius: 10px;
+    border: 2px solid ${colors.border};
+  `;
 
   const Title = styled.Text`
-		color: ${Colors[colorscheme].text};
-		font-weight: 500;
-		font-size: 16px;
-	`;
+    color: ${colors.text};
+    font-weight: 500;
+    font-size: 16px;
+  `;
 
   const Intro = styled.Text`
-		color: #898989;
-		margin-top: 10px;
-	`;
+    color: #898989;
+    margin-top: 10px;
+  `;
 
   const Price = styled.Text`
-		color: ${Colors[colorscheme].tint};
-		font-weight: 700;
-		margin-top: 10px;
-	`;
+    color: ${colors.primary};
+    font-weight: 700;
+    margin-top: 10px;
+  `;
 
   useEffect(() => {
     getInfo();

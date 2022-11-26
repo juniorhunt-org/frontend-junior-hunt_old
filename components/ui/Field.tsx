@@ -1,8 +1,7 @@
 import React, {FC} from "react";
 import {KeyboardTypeOptions, TextInput} from "react-native";
-import Colors from "../../constants/Colors";
 import Layout from "../../constants/Layout";
-import useColorScheme from "../../hooks/useColorScheme";
+import {useTheme} from "@react-navigation/native";
 
 interface IField {
   onChange: (val: string) => void;
@@ -56,7 +55,7 @@ const Field: FC<IField> = ({
                              multiline = false,
                              autoCapitalize = false,
                            }) => {
-  const colorscheme = useColorScheme();
+  const {colors} = useTheme();
   const {isSmallDevice} = Layout;
   return (
     <TextInput
@@ -64,17 +63,17 @@ const Field: FC<IField> = ({
       style={{
         marginTop: 10,
         padding: isSmallDevice ? 5 : 10,
-        borderColor: Colors[colorscheme].tint,
+        borderColor: colors.primary,
         width: `${width}%`,
         height: multiline ? 70 : "auto",
-        backgroundColor: Colors[colorscheme].background,
-        color: Colors[colorscheme].text,
+        backgroundColor: colors.background,
+        color: colors.text,
         borderRadius: 10,
         borderWidth: 2,
         fontSize: isSmallDevice ? 9 : 12,
       }}
       placeholder={placeholder}
-      placeholderTextColor={Colors[colorscheme].placeholderColor}
+      placeholderTextColor={colors.primary}
       onChangeText={onChange}
       value={val}
       multiline={multiline}

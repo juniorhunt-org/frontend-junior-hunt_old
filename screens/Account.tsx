@@ -5,11 +5,10 @@ import Button from "../components/ui/Button";
 import {Alert, KeyboardAvoidingView, Platform, ScrollView, View,} from "react-native";
 import Label from "../components/ui/Label";
 import Field from "../components/ui/Field";
-import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
 import {FadeInView} from "../components/FadeInView";
 import UserCard from "../components/ui/UserCard";
 import {useNotification} from "../hooks/useNotification";
+import {useTheme} from "@react-navigation/native";
 
 export interface IUpdateData {
   description: string;
@@ -19,7 +18,7 @@ export interface IUpdateData {
 const Account: FC = () => {
   const {logout, user, updateUserProfile} = useAuth();
   const [data, setData] = useState<IUpdateData>({} as IUpdateData);
-  const colorscheme = useColorScheme();
+  const {colors} = useTheme();
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const {deleteNotificationTokenFromDb} = useNotification();
 
@@ -41,10 +40,10 @@ const Account: FC = () => {
                 style={{
                   marginTop: 15,
                   padding: 10,
-                  backgroundColor: Colors[colorscheme].background,
+                  backgroundColor: colors.background,
                   borderRadius: 7,
                   borderWidth: 2,
-                  borderColor: Colors[colorscheme].tint,
+                  borderColor: colors.primary,
                 }}
               >
                 <Label>
